@@ -1,204 +1,140 @@
-using UnityEngine;
-
-// Zaroori Components automatically add ho jayenge
-[RequireComponent(typeof(CharacterController))]
-public class IronHarborController : MonoBehaviour
-{
-    [Header("--- Player Statistics ---")]
-    public float health = 100f;
-    public int wantedLevel = 0; // 0 to 5 Stars
-    public string currentZone = "District A: The Stacks";
-
-    [Header("--- Movement Settings ---")]
-    public float walkSpeed = 4.0f;
-    public float runSpeed = 8.0f;
-    public float jumpHeight = 1.5f;
-    public float gravity = -19.62f;
-
-    [Header("--- Camera Settings ---")]
-    public Transform cameraTransform; // Main Camera ko yahan drag karein
-    public float mouseSensitivity = 2.0f;
-    public float lookXLimit = 60.0f;
-
-    [Header("--- Interaction ---")]
-    public float interactRange = 4.0f;
-    public LayerMask interactableLayer; // Cars/Items ki layer
-
-    // Private Variables (Logic ke liye)
-    private CharacterController characterController;
-    private Vector3 moveDirection = Vector3.zero;
-    private float rotationX = 0;
-    private bool canMove = true;
-    private bool isInVehicle = false;
-
-    void Start()
-    {
-        characterController = GetComponent<CharacterController>();
-
-        // Mouse cursor ko hide aur lock karein (FPS/TPS feel ke liye)
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    void Update()
-    {
-        if (isInVehicle)
-        {
-            HandleVehicleInput();
-        }
-        else
-        {
-            HandleOnFootMovement();
-            HandleMouseLook();
-            HandleInteraction();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>GTA Simple Prototype</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #2c3e50; /* Road Color */
+            font-family: sans-serif;
+            touch-action: none; /* Prevent zoom on mobile */
         }
 
-        // Test: Press 'P' to increase Wanted Level (Police Chase Simulation)
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            IncreaseWantedLevel();
-        }
-    }
-
-    // 1. CHARACTER MOVEMENT LOGIC
-    void HandleOnFootMovement()
-    {
-        if (!canMove) return;
-
-        // Ground check
-        bool isGrounded = characterController.isGrounded;
-        if (isGrounded && moveDirection.y < 0)
-        {
-            moveDirection.y = -2f;
+        #gameCanvas {
+            display: block;
         }
 
-        // Input commands
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
-
-        // Shift key se sprint karein
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical");
-        float curSpeedY = (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal");
-
-        float movementDirectionY = moveDirection.y;
-        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
-
-        // Jump Logic
-        if (Input.GetButton("Jump") && isGrounded)
-        {
-            moveDirection.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-        else
-        {
-            moveDirection.y = movementDirectionY;
+        /* UI Controls Styling */
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+            pointer-events: none; /* Let clicks pass through empty space */
         }
 
-        // Gravity Apply karein
-        moveDirection.y += gravity * Time.deltaTime;
-        characterController.Move(moveDirection * Time.deltaTime);
-    }
+        .d-pad, .action-btn {
+            pointer-events: auto;
+        }
 
-    // 2. CAMERA / MOUSE LOOK LOGIC
-    void HandleMouseLook()
-    {
-        if (!canMove) return;
+        .btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid white;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            user-select: none;
+            cursor: pointer;
+        }
 
-        rotationX += -Input.GetAxis("Mouse Y") * mouseSensitivity;
-        rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-        
-        // Camera ko up/down rotate karein
-        if(cameraTransform != null)
-        {
-            cameraTransform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        .btn:active {
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+        }
+
+        .d-pad {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         
-        // Player body ko left/right rotate karein
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * mouseSensitivity, 0);
-    }
-
-    // 3. INTERACTION SYSTEM (Entering Cars)
-    void HandleInteraction()
-    {
-        // Screen ke center se Raycast phenkna
-        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, interactRange))
-        {
-            // Agar saamne gaadi hai (Tag 'Vehicle' hona chahiye)
-            if (hit.collider.CompareTag("Vehicle"))
-            {
-                // UI Message Simulation (Debug Log)
-                Debug.Log("Press [F] to hijack " + hit.collider.name);
-
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    EnterVehicle(hit.collider.gameObject);
-                }
-            }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
         }
-    }
+    </style>
+</head>
+<body>
 
-    // 4. VEHICLE LOGIC (Simplified)
-    void EnterVehicle(GameObject vehicle)
-    {
-        isInVehicle = true;
-        // Character ko disable karein aur gaadi ko control karein
-        Debug.Log("Entered Vehicle. Switching control...");
-        // Real game mein yahan camera switch aur animation play hogi
-    }
+    <div id="info">Open World Prototype<br>Use buttons to drive</div>
+    <canvas id="gameCanvas"></canvas>
 
-    void HandleVehicleInput()
-    {
-        // Agar gaadi mein hai, to 'F' dabane par bahar nikle
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            isInVehicle = false;
-            Debug.Log("Exited Vehicle.");
-        }
-    }
+    <div class="controls">
+        <div class="d-pad">
+            <div class="btn" id="leftBtn">◄</div>
+            <div class="btn" id="rightBtn">►</div>
+        </div>
+        <div class="actions">
+            <div class="btn" id="gasBtn" style="background: rgba(0, 255, 0, 0.3);">▲</div>
+            <div class="btn" id="brakeBtn" style="background: rgba(255, 0, 0, 0.3);">▼</div>
+        </div>
+    </div>
 
-    // 5. WANTED LEVEL SYSTEM (Police AI Placeholder)
-    void IncreaseWantedLevel()
-    {
-        wantedLevel++;
-        if (wantedLevel > 5) wantedLevel = 5;
-        
-        string policeResponse = "";
-        switch (wantedLevel)
-        {
-            case 1: policeResponse = "Patrol Drones Deployed"; break;
-            case 2: policeResponse = "Police Units Pursuing"; break;
-            case 3: policeResponse = "Roadblocks & SWAT"; break;
-            case 4: policeResponse = "Tactical Eraser Squads"; break;
-            case 5: policeResponse = "CITY LOCKDOWN - MILITARY"; break;
-        }
-        Debug.LogWarning("WANTED LEVEL " + wantedLevel + ": " + policeResponse);
-    }
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
 
-    // 6. DEBUG UI (Screen par status dikhane ke liye)
-    void OnGUI()
-    {
-        GUIStyle style = new GUIStyle();
-        style.fontSize = 20;
-        style.normal.textColor = Color.white;
+        // Fullscreen Canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        GUI.Label(new Rect(20, 20, 300, 50), "Iron Harbor: Syndicate (Pre-Alpha)", style);
-        
-        style.normal.textColor = Color.yellow;
-        GUI.Label(new Rect(20, 50, 300, 50), "Zone: " + currentZone, style);
-        
-        if(wantedLevel > 0)
-        {
-            style.normal.textColor = Color.red;
-            GUI.Label(new Rect(20, 80, 300, 50), "WANTED LEVEL: " + wantedLevel + " ★", style);
-        }
+        // Game State
+        const car = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            width: 30,
+            height: 50,
+            angle: 0,
+            speed: 0,
+            maxSpeed: 10,
+            friction: 0.95,
+            color: '#f1c40f' // Yellow Sports Car
+        };
 
-        if(isInVehicle)
-        {
-            style.normal.textColor = Color.cyan;
-            GUI.Label(new Rect(Screen.width/2 - 50, Screen.height - 100, 200, 50), "DRIVING MODE", style);
-        }
-    }
-}
+        const inputs = {
+            left: false,
+            right: false,
+            gas: false,
+            brake: false
+        };
+
+        // Environment (Simple buildings)
+        const buildings = [
+            {x: 100, y: 100, w: 200, h: 150, color: '#95a5a6'},
+            {x: 500, y: 400, w: 150, h: 300, color: '#7f8c8d'},
+            {x: 800, y: 100, w: 200, h: 200, color: '#bdc3c7'},
+            {x: 200, y: 600, w: 300, h: 100, color: '#95a5a6'}
+        ];
+
+        // Input Handling (Touch & Mouse)
+        function addInputListeners(id, key) {
+            const btn = document.getElementById(id);
+            // Touch
+            btn.addEventListener('touchstart', (e) => { e.preventDefault(); inputs[key] = true; });
+            btn.addEventListener('touchend', (e) => { e.preventDefault(); inputs[key] = false; });
+            // Mouse
+            btn.addEventListener('mousedown', () => { inputs[key] = true; });
+            btn.addEventListener('mouseup', () => { inputs[key] = false; });
+            btn.addEventListener('mouseleave
