@@ -27,14 +27,14 @@
             justify-content: space-between;
             align-items: center;
             box-sizing: border-box;
-            height: 100px;
+            height: 160px; /* Header ko thoda bada kiya taaki badi photo aa sake */
         }
 
         /* Name Section (Left) */
         .header-content h1 {
             color: white;
             margin: 0;
-            font-size: 24px;
+            font-size: 32px; /* Naam bhi thoda bada kiya */
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -42,22 +42,23 @@
         .tag {
             background: #ffa502;
             color: white;
-            padding: 4px 15px;
+            padding: 6px 20px;
             border-radius: 20px;
             font-weight: bold;
             display: inline-block;
-            margin-top: 5px;
-            font-size: 12px;
+            margin-top: 8px;
+            font-size: 14px;
         }
 
-        /* Photo Icon (Right) */
+        /* Photo Icon (Right) - SIZE BADA KIYA */
         .photo-container {
-            width: 70px;
-            height: 70px;
+            width: 130px;  /* Size bada kar diya (pehle 70px tha) */
+            height: 130px; /* Size bada kar diya */
             background: white;
-            padding: 3px;
+            padding: 4px;
             border-radius: 50%;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid white;
         }
 
         .profile-img {
@@ -71,26 +72,25 @@
         .main-content {
             padding: 20px;
             flex: 1;
-            position: relative; /* Positioning ke liye */
+            position: relative;
         }
 
-        /* --- BIO DATA (Smart Card - Top Right Below Header) --- */
+        /* --- BIO DATA (Moved Left/Center) --- */
         .bio-data-card {
             background: white;
-            width: 250px; /* Chhoti width */
+            width: 300px; /* Thoda chauda kiya */
             padding: 15px;
             border-radius: 10px;
-            border-left: 5px solid #ff4757; /* Stylish Border */
+            border-left: 5px solid #ff4757;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             
-            /* Positioning Logic */
-            margin-left: auto; /* Right side push karne ke liye */
-            margin-bottom: 20px;
+            /* Positioning Logic - MOVED LEFT (Center) */
+            margin: 0 auto 30px auto; /* Ye line isko beech me (thora left) le aayi */
             text-align: left;
         }
 
         .bio-title {
-            font-size: 12px;
+            font-size: 14px;
             color: #ff4757;
             font-weight: bold;
             text-transform: uppercase;
@@ -100,8 +100,8 @@
         }
 
         .bio-row {
-            font-size: 12px; /* Short Letter Size */
-            margin-bottom: 6px;
+            font-size: 14px;
+            margin-bottom: 8px;
             color: #555;
         }
         .bio-row strong { color: #333; }
@@ -114,7 +114,7 @@
             background: white;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            clear: both; /* Bio data se takkar na khaye */
+            clear: both;
         }
 
         h2 { color: #3742fa; margin-top: 0; font-size: 18px; }
@@ -151,14 +151,14 @@
             padding: 20px 40px;
             margin-top: 20px;
             display: flex;
-            justify-content: flex-end; /* Content ko Right bhejo */
+            justify-content: flex-end;
         }
 
         .address-box {
-            text-align: right; /* Text alignment Right */
+            text-align: right;
             font-size: 13px;
             line-height: 1.5;
-            border-right: 3px solid #ffa502; /* Right side border style */
+            border-right: 3px solid #ffa502;
             padding-right: 15px;
         }
 
@@ -191,7 +191,7 @@
             <div class="bio-row"><strong>Father:</strong> Amit Kumar</div>
             <div class="bio-row"><strong>Mother:</strong> Rani Devi</div>
             <div class="bio-row"><strong>Class:</strong> 2nd Standard</div>
-            <div class="bio-row"><strong>School:</strong> M.S.R. Sainik School</div>
+            <div class="bio-row"><strong>School:</strong> M.S.R. Saini School</div>
         </div>
 
         <div class="files-area">
@@ -204,7 +204,7 @@
     <div class="footer">
         <div class="address-box">
             <span class="address-title">📍 CONTACT ADDRESS</span>
-            At.- Gadhbanni, P.O- hathwan<br>
+            At.- Gadhbanni, P.O- Goriyami<br>
             P.S.- Alouli, District.- Khagaria<br>
             Bihar, India
         </div>
