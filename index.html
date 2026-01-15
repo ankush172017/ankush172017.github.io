@@ -5,67 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ankush Yadav - Future Scientist</title>
     <style>
-        /* --- DESIGN: Professional Top-Bar Theme --- */
+        /* --- DESIGN: Professional Layout --- */
         body {
             margin: 0;
             padding: 0;
             font-family: 'Verdana', sans-serif;
-            background-color: #f0f2f5; /* Thoda sa light grey background professional look ke liye */
+            background-color: #f4f6f9;
             color: #333;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* --- PINK TOP HEADER BAR --- */
+        /* --- PINK TOP HEADER --- */
         .full-header {
             background: #ff4757; /* Bright Pink */
             width: 100%;
-            height: auto; /* Height content ke hisab se */
-            padding: 15px 30px; /* Thoda andar jagah */
+            padding: 10px 30px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            display: flex; /* Flexbox layout */
-            justify-content: space-between; /* Naam Left, Photo Right */
-            align-items: center; /* Vertically center */
-            box-sizing: border-box; /* Padding ko width me na jode */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            height: 100px;
         }
 
-        /* Left Side Content (Name & Tag) */
-        .header-content {
-            text-align: left;
-        }
-
-        h1 {
-            color: white; /* White Text on Pink Background */
+        /* Name Section (Left) */
+        .header-content h1 {
+            color: white;
             margin: 0;
-            font-size: 28px;
+            font-size: 24px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
         .tag {
-            background: #ffa502; /* Orange Tag */
+            background: #ffa502;
             color: white;
-            padding: 5px 15px;
+            padding: 4px 15px;
             border-radius: 20px;
             font-weight: bold;
             display: inline-block;
-            margin-top: 8px;
-            font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            margin-top: 5px;
+            font-size: 12px;
         }
 
-        /* Photo Settings (Top Right Corner Icon) */
+        /* Photo Icon (Right) */
         .photo-container {
-            width: 80px;  /* Chhota icon size */
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: white;
             padding: 3px;
-            border-radius: 50%; /* Round shape */
+            border-radius: 50%;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            /* Position absolute hatakar flexbox use kiya hai */
         }
 
         .profile-img {
@@ -75,104 +67,107 @@
             object-fit: cover;
         }
 
-        /* --- MAIN CONTENT AREA --- */
+        /* --- MAIN AREA --- */
         .main-content {
-            padding: 30px 20px;
-            flex: 1; /* Fill remaining space */
+            padding: 20px;
+            flex: 1;
+            position: relative; /* Positioning ke liye */
         }
 
-        /* Details Table */
-        .info-container {
-            width: 95%;
-            max-width: 900px;
-            margin: 0 auto 40px auto;
-            background: #fff;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 10px;
-            border-bottom: 1px solid #f1f2f6;
-            font-size: 18px;
+        /* --- BIO DATA (Smart Card - Top Right Below Header) --- */
+        .bio-data-card {
+            background: white;
+            width: 250px; /* Chhoti width */
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #ff4757; /* Stylish Border */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            
+            /* Positioning Logic */
+            margin-left: auto; /* Right side push karne ke liye */
+            margin-bottom: 20px;
             text-align: left;
         }
-        
-        .info-row:last-child { border-bottom: none; }
-        .label { font-weight: bold; color: #747d8c; }
-        .value { color: #2f3542; font-weight: bold; }
 
-        /* --- 500 FILES SECTION (FULL WIDTH) --- */
-        .files-area {
-            width: 96%;
-            margin: 0 auto;
-            padding: 25px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        .bio-title {
+            font-size: 12px;
+            color: #ff4757;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
         }
 
-        h2 { color: #3742fa; margin-top: 0; text-align: center; }
+        .bio-row {
+            font-size: 12px; /* Short Letter Size */
+            margin-bottom: 6px;
+            color: #555;
+        }
+        .bio-row strong { color: #333; }
+
+        /* --- 500 FILES SECTION --- */
+        .files-area {
+            width: 98%;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            clear: both; /* Bio data se takkar na khaye */
+        }
+
+        h2 { color: #3742fa; margin-top: 0; font-size: 18px; }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); 
-            gap: 12px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); 
+            gap: 8px;
+            margin-top: 15px;
         }
 
         .file-box {
-            background: #f1f2f6; /* Light grey boxes */
+            background: #f1f2f6;
             color: #333;
-            padding: 15px;
+            padding: 10px;
             text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
+            border-radius: 5px;
+            font-size: 12px;
             font-weight: bold;
             text-align: center;
-            transition: 0.2s;
             border: 1px solid #ced6e0;
+            display: block;
         }
 
         .file-box:hover {
             background: #3742fa;
             color: white;
-            transform: scale(1.05);
-            box-shadow: 0 5px 10px rgba(55, 66, 250, 0.3);
         }
 
-        /* --- FOOTER (ADDRESS SECTION) --- */
+        /* --- FOOTER (Bottom Right Corner) --- */
         .footer {
             background-color: #2f3542;
             color: white;
-            padding: 30px 20px;
-            margin-top: 40px;
-            text-align: center;
-            font-size: 16px;
-            line-height: 1.6;
+            padding: 20px 40px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end; /* Content ko Right bhejo */
         }
 
         .address-box {
-            border: 1px dashed #747d8c;
-            padding: 15px;
-            display: inline-block;
-            border-radius: 10px;
-            max-width: 90%;
-            background: rgba(255,255,255,0.05);
+            text-align: right; /* Text alignment Right */
+            font-size: 13px;
+            line-height: 1.5;
+            border-right: 3px solid #ffa502; /* Right side border style */
+            padding-right: 15px;
         }
 
-        /* Mobile Responsive: Agar screen choti ho to layout adjust kare */
-        @media (max-width: 600px) {
-            .full-header {
-                flex-direction: column; /* Upar niche kar do */
-                text-align: center;
-                padding: 20px;
-            }
-            .header-content { text-align: center; margin-bottom: 15px; }
-            .photo-container { width: 100px; height: 100px; } /* Mobile me thoda bada */
+        .address-title {
+            color: #ffa502;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
         }
 
     </style>
@@ -184,7 +179,6 @@
             <h1>Ankush Yadav</h1>
             <div class="tag">🚀 Future Scientist</div>
         </div>
-
         <div class="photo-container">
             <img src="ankush.jpg" class="profile-img" alt="Ankush" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
         </div>
@@ -192,15 +186,16 @@
 
     <div class="main-content">
         
-        <div class="info-container">
-            <div class="info-row"><span class="label">Father:</span> <span class="value">Amit Kumar</span></div>
-            <div class="info-row"><span class="label">Mother:</span> <span class="value">Rani Devi</span></div>
-            <div class="info-row"><span class="label">Class:</span> <span class="value">2nd Standard</span></div>
-            <div class="info-row"><span class="label">School:</span> <span class="value">M.S.R. Saini School</span></div>
+        <div class="bio-data-card">
+            <div class="bio-title">CANDIDATE PROFILE</div>
+            <div class="bio-row"><strong>Father:</strong> Amit Kumar</div>
+            <div class="bio-row"><strong>Mother:</strong> Rani Devi</div>
+            <div class="bio-row"><strong>Class:</strong> 2nd Standard</div>
+            <div class="bio-row"><strong>School:</strong> M.S.R. Saini School</div>
         </div>
 
         <div class="files-area">
-            <h2>📂 My 500 Project Files</h2>
+            <h2>📂 Project Database (500 Files)</h2>
             <div class="grid" id="grid"></div>
         </div>
 
@@ -208,13 +203,11 @@
 
     <div class="footer">
         <div class="address-box">
-            <strong>📍 CONTACT ADDRESS</strong><br><br>
+            <span class="address-title">📍 CONTACT ADDRESS</span>
             At.- Gadhbanni, P.O- Goriyami<br>
-            P.S.- Alouli, District.- Khagaria
+            P.S.- Alouli, District.- Khagaria<br>
+            Bihar, India
         </div>
-        <p style="font-size: 12px; color: #a4b0be; margin-top: 20px;">
-            © Scientist Ankush Yadav | Official Portal
-        </p>
     </div>
 
     <script>
