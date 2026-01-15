@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real World Map - Interactive</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        /* Map ko poori screen par dikhane ke liye CSS */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        #map {
+            height: 100vh; /* Full Height */
+            width: 100%;   /* Full Width */
+        }
+        .header-box {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-box">Interactive World Map</div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // 1. Map Initialize karna (Center coordinates aur zoom level)
+        var map = L.map('map').setView([20, 0], 2);
+
+        // 2. Real Map ki Photo/Tiles load karna (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 3. Ek sample marker (India ke liye)
+        var marker = L.marker([20.5937, 78.9629]).addTo(map);
+        marker.bindPopup("<b>India</b><br>Welcome to the world map.").openPopup();
+
+        // 4. Click karne par jagah ke coordinates dikhana
+        map.on('click', function(e) {
+            alert("Aapne click kiya: " + e.latlng.lat + ", " + e.latlng.lng);
+        });
+    </script>
+
+</body>
+</html>
