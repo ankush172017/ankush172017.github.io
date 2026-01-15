@@ -5,66 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ankush Yadav - Future Scientist</title>
     <style>
-        /* --- DESIGN: Fun & Bright Theme --- */
+        /* --- DESIGN: Professional Top-Bar Theme --- */
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             font-family: 'Verdana', sans-serif;
-            background-color: #ffffff; /* White Background */
+            background-color: #f0f2f5; /* Thoda sa light grey background professional look ke liye */
             color: #333;
-            text-align: center;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* --- PROFILE CARD --- */
-        .card {
-            background: white;
-            max-width: 450px;
-            margin: 20px auto;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
-            border: 2px solid #eee;
-        }
-
-        /* Pink Header */
-        .card-header {
+        /* --- PINK TOP HEADER BAR --- */
+        .full-header {
             background: #ff4757; /* Bright Pink */
-            height: 120px;
             width: 100%;
-            position: relative;
+            height: auto; /* Height content ke hisab se */
+            padding: 15px 30px; /* Thoda andar jagah */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex; /* Flexbox layout */
+            justify-content: space-between; /* Naam Left, Photo Right */
+            align-items: center; /* Vertically center */
+            box-sizing: border-box; /* Padding ko width me na jode */
         }
 
-        /* Photo Settings */
-        .photo-container {
-            width: 150px;
-            height: 150px;
-            background: white;
-            padding: 5px;
-            border-radius: 50%;
-            position: absolute;
-            bottom: -75px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Name and Details */
-        .card-body {
-            padding-top: 80px;
-            padding-bottom: 30px;
+        /* Left Side Content (Name & Tag) */
+        .header-content {
+            text-align: left;
         }
 
         h1 {
-            color: #ff4757; /* Pink Name */
+            color: white; /* White Text on Pink Background */
             margin: 0;
             font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
         .tag {
@@ -74,90 +52,169 @@
             border-radius: 20px;
             font-weight: bold;
             display: inline-block;
-            margin: 10px 0 20px 0;
+            margin-top: 8px;
             font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .info-table {
-            width: 90%;
-            margin: 0 auto;
+        /* Photo Settings (Top Right Corner Icon) */
+        .photo-container {
+            width: 80px;  /* Chhota icon size */
+            height: 80px;
+            background: white;
+            padding: 3px;
+            border-radius: 50%; /* Round shape */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            /* Position absolute hatakar flexbox use kiya hai */
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .main-content {
+            padding: 30px 20px;
+            flex: 1; /* Fill remaining space */
+        }
+
+        /* Details Table */
+        .info-container {
+            width: 95%;
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 10px;
+            border-bottom: 1px solid #f1f2f6;
+            font-size: 18px;
             text-align: left;
-            border-collapse: collapse;
         }
-        .info-table td {
-            padding: 10px;
-            border-bottom: 1px dashed #ddd;
-            font-size: 16px;
-        }
-        .label { font-weight: bold; color: #555; }
+        
+        .info-row:last-child { border-bottom: none; }
+        .label { font-weight: bold; color: #747d8c; }
         .value { color: #2f3542; font-weight: bold; }
 
-        /* --- 500 FILES SECTION --- */
+        /* --- 500 FILES SECTION (FULL WIDTH) --- */
         .files-area {
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 20px;
-            background: #f1f2f6; /* Light Grey Box */
-            border-radius: 20px;
+            width: 96%;
+            margin: 0 auto;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        h2 { color: #3742fa; } /* Blue Heading */
+        h2 { color: #3742fa; margin-top: 0; text-align: center; }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 10px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); 
+            gap: 12px;
+            margin-top: 25px;
         }
 
-        /* Colorful File Buttons */
         .file-box {
-            background: white;
+            background: #f1f2f6; /* Light grey boxes */
             color: #333;
-            padding: 10px;
+            padding: 15px;
             text-decoration: none;
-            border-radius: 10px;
-            font-size: 12px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: bold;
-            box-shadow: 0 4px 0 #dfe4ea;
+            text-align: center;
             transition: 0.2s;
-            border: 1px solid #ddd;
+            border: 1px solid #ced6e0;
         }
 
         .file-box:hover {
-            background: #3742fa; /* Blue on hover */
+            background: #3742fa;
             color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 6px 0 #2f3542;
+            transform: scale(1.05);
+            box-shadow: 0 5px 10px rgba(55, 66, 250, 0.3);
+        }
+
+        /* --- FOOTER (ADDRESS SECTION) --- */
+        .footer {
+            background-color: #2f3542;
+            color: white;
+            padding: 30px 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .address-box {
+            border: 1px dashed #747d8c;
+            padding: 15px;
+            display: inline-block;
+            border-radius: 10px;
+            max-width: 90%;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Mobile Responsive: Agar screen choti ho to layout adjust kare */
+        @media (max-width: 600px) {
+            .full-header {
+                flex-direction: column; /* Upar niche kar do */
+                text-align: center;
+                padding: 20px;
+            }
+            .header-content { text-align: center; margin-bottom: 15px; }
+            .photo-container { width: 100px; height: 100px; } /* Mobile me thoda bada */
         }
 
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="card-header">
-            <div class="photo-container">
-                <img src="anush.jpg" class="profile-img" alt="Ankush" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
-            </div>
-        </div>
-
-        <div class="card-body">
+    <div class="full-header">
+        <div class="header-content">
             <h1>Ankush Yadav</h1>
             <div class="tag">🚀 Future Scientist</div>
+        </div>
 
-            <table class="info-table">
-                <tr><td class="label">Father:</td> <td class="value">Amit Kumar</td></tr>
-                <tr><td class="label">Mother:</td> <td class="value">Rani Devi</td></tr>
-                <tr><td class="label">Class:</td> <td class="value">2nd Standard</td></tr>
-                <tr><td class="label">School:</td> <td class="value">M.S.R. Saini School</td></tr>
-            </table>
+        <div class="photo-container">
+            <img src="ankush.jpg" class="profile-img" alt="Ankush" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
         </div>
     </div>
 
-    <div class="files-area">
-        <h2>📂 My 500 Project Files</h2>
-        <div class="grid" id="grid"></div>
+    <div class="main-content">
+        
+        <div class="info-container">
+            <div class="info-row"><span class="label">Father:</span> <span class="value">Amit Kumar</span></div>
+            <div class="info-row"><span class="label">Mother:</span> <span class="value">Rani Devi</span></div>
+            <div class="info-row"><span class="label">Class:</span> <span class="value">2nd Standard</span></div>
+            <div class="info-row"><span class="label">School:</span> <span class="value">M.S.R. Saini School</span></div>
+        </div>
+
+        <div class="files-area">
+            <h2>📂 My 500 Project Files</h2>
+            <div class="grid" id="grid"></div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <div class="address-box">
+            <strong>📍 CONTACT ADDRESS</strong><br><br>
+            At.- Gadhbanni, P.O- Goriyami<br>
+            P.S.- Alouli, District.- Khagaria
+        </div>
+        <p style="font-size: 12px; color: #a4b0be; margin-top: 20px;">
+            © Scientist Ankush Yadav | Official Portal
+        </p>
     </div>
 
     <script>
