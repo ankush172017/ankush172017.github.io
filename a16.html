@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song App</title>
+    <style>
+        /* CSS - App ki Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+            overflow: hidden; /* Prevent scrolling specifically for app feel */
+        }
+
+        /* Header Style */
+        .header {
+            background-color: #075e54;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Chat List Style */
+        .chat-list {
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            background: white;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .chat-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background-color: #ddd;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-image: url('https://via.placeholder.com/50');
+            background-size: cover;
+        }
+
+        .chat-info h4 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .chat-info p {
+            margin: 5px 0 0;
+            color: gray;
+            font-size: 14px;
+        }
+
+        /* Floating Camera Button */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Image Editor Modal (Hidden by default) */
+        #editor-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas {
+            border: 2px solid white;
+            background-color: white;
+            max-width: 90%;
+            max-height: 70%;
+        }
+
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button.btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-close { background-color: #ff4444; color: white; }
+        .btn-save { background-color: #25d366; color: white; }
+        .btn-magic { background-color: #3b5998; color: white; }
+
+        input[type="file"] { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">Song</div>
+        <div>🔍 &nbsp; ⚙️</div>
+    </div>
+
+    <div class="chat-list">
+        <div class="chat-item">
+            <div class="avatar" style="background-color: #ff9800;"></div>
+            <div class="chat-info">
+                <h4>Rahul Sharma</h4>
+                <p>Kaisa hai bhai?</p>
+            </div>
+        </div>
+        <div class="chat-item">
+            <div class="avatar" style="background-color: #2196f3;"></div>
+            <div class="chat-info">
+                <h4>Priya Singh</h4>
+                <p>Photo bhejo...</p>
+            </div>
+        </div>
+        <div class="chat-item">
+            <div class="avatar" style="background-color: #9c27b0;"></div>
+            <div class="chat-info">
+                <h4>Amit Verma</h4>
+                <p>Kal milte hain.</p>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept="image/*">
+
+    <button class="fab" onclick="document.getElementById('fileInput').click()">📷</button>
+
+    <div id="editor-modal">
+        <h3 style="color: white;">Edit / Draw on Photo</h3>
+        <canvas id="photoCanvas"></canvas>
+        
+        <div class="controls">
+            <input type="color" id="colorPicker" value="#ff0000">
+            <button class="btn btn-magic" onclick="alert('Face swap AI feature ke liye Backend server chahiye!')">🤖 AI Magic</button>
+            <button class="btn btn-save" onclick="downloadImage()">💾 Save</button>
+            <button class="btn btn-close" onclick="closeEditor()">❌ Close</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript - App Logic
+        const fileInput = document.getElementById('fileInput');
+        const modal = document.getElementById('editor-modal');
+        const canvas = document.getElementById('photoCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        // 1. Photo Upload aur Canvas pe load karna
+        fileInput.addEventListener('change', function(e) {
+            if(e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        // Canvas size set karein
+                        canvas.width = 300; 
+                        canvas.height = 400;
+                        // Image ko canvas pe draw karein
+                        ctx.drawImage(img, 0, 0, 300, 400);
+                        modal.style.display = 'flex'; // Editor kholein
+                    }
+                    img.src = event.target.result;
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+
+        // 2. Drawing Feature Logic
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        
+        // Touch support for mobile
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e); // Click karte hi dot ban jaye
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath(); // Naya path shuru karein
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+
+            e.preventDefault(); // Scrolling rokein
+            
+            // Mouse aur Touch coordinates adjust karna
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = document.getElementById('colorPicker').value;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        // 3. Close Editor
+        function closeEditor() {
+            modal.style.display = 'none';
+            fileInput.value = ''; // Reset input
+        }
+
+        // 4. Save/Download Image
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'song_edited_photo.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>
