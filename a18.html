@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song App - Pro</title>
+    <style>
+        :root { --wa-green: #00a884; --wa-dark: #111b21; --wa-bg: #f0f2f5; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--wa-bg); overflow: hidden; }
+        
+        /* Header */
+        .header { background: var(--wa-green); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { font-size: 22px; font-weight: bold; }
+
+        /* Chat List Dummy */
+        .chat-list { height: 90vh; background: white; }
+        .chat-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center; }
+        .avatar { width: 50px; height: 50px; border-radius: 50%; background: #ccc; margin-right: 15px; }
+        
+        /* Floating Camera */
+        .camera-btn { position: fixed; bottom: 30px; right: 30px; background: var(--wa-green); color: white; width: 65px; height: 65px; border-radius: 50%; border: none; font-size: 30px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        /* Full Screen Editor */
+        #editor { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; flex-direction: column; }
+        .canvas-area { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; }
+        canvas { max-width: 100%; max-height: 80vh; border: 1px solid #333; }
+
+        /* Faces Toolbar */
+        .face-bar { background: #202c33; padding: 15px; display: flex; gap: 15px; overflow-x: auto; border-top: 1px solid #333; }
+        .face-option { text-align: center; color: white; cursor: pointer; min-width: 80px; }
+        .face-option img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid white; object-fit: cover; }
+        .face-option span { display: block; font-size: 12px; margin-top: 5px; }
+
+        .controls { background: #111b21; padding: 15px; display: flex; justify-content: space-around; }
+        .btn { padding: 10px 25px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
+        .btn-save { background: var(--wa-green); color: white; }
+        .btn-cancel { background: #ef5350; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">Song</div>
+        <div>🔍 &nbsp; ⋮</div>
+    </div>
+
+    <div class="chat-list">
+        <div class="chat-item"><div class="avatar"></div><div><strong>Bhai</strong><p>Photo edit kar...</p></div></div>
+        <div class="chat-item"><div class="avatar"></div><div><strong>Group</strong><p>Modi ji ki photo...</p></div></div>
+    </div>
+
+    <input type="file" id="upload" hidden accept="image/*">
+    <button class="camera-btn" onclick="document.getElementById('upload').click()">📷</button>
+
+    <div id="editor">
+        <div class="canvas-area">
+            <canvas id="mainCanvas"></canvas>
+        </div>
+
+        <div class="face-bar">
+            <div class="face-option" onclick="applyFace('https://i.ibb.co/p6ZzP8v/modi.png')">
+                <img src="https://i.ibb.co/p6ZzP8v/modi.png" onerror="this.src='https://via.placeholder.com/60?text=Modi'">
+                <span>Modi Ji</span>
+            </div>
+            <div class="face-option" onclick="applyFace('https://i.ibb.co/9q0Dk9K/kohli.png')">
+                <img src="https://i.ibb.co/9q0Dk9K/kohli.png" onerror="this.src='https://via.placeholder.com/60?text=Kohli'">
+                <span>Kohli</span>
+            </div>
+            <div class="face-option" onclick="applyFace('https://i.ibb.co/3s6K8sM/ambani.png')">
+                <img src="https://i.ibb.co/3s6K8sM/ambani.png" onerror="this.src='https://via.placeholder.com/60?text=Ambani'">
+                <span>Ambani</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-cancel" onclick="location.reload()">Clear All</button>
+            <button class="btn btn-save" onclick="downloadImage()">Download Photo</button>
+            <button class="btn" style="background:#444; color:white;" onclick="closeEditor()">Back</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        let bgImage = null;
+
+        // Photo Upload Function
+        document.getElementById('upload').addEventListener('change', function(e) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                bgImage = new Image();
+                bgImage.onload = function() {
+                    canvas.width = bgImage.width;
+                    canvas.height = bgImage.height;
+                    ctx.drawImage(bgImage, 0, 0);
+                    document.getElementById('editor').style.display = 'flex';
+                }
+                bgImage.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        // Face Stick-on Function
+        function applyFace(faceUrl) {
+            const faceImg = new Image();
+            faceImg.crossOrigin = "anonymous";
+            faceImg.onload = function() {
+                // Face ko photo ke hisaab se scale karna
+                const size = canvas.width * 0.25; 
+                // Face ko center mein place karna (Aap mouse se move bhi kar sakte hain agar advance code likha jaye)
+                const x = (canvas.width / 2) - (size / 2);
+                const y = (canvas.height / 3) - (size / 2);
+                
+                ctx.drawImage(faceImg, x, y, size, size);
+                alert("Face added! Aap ise download kar sakte hain.");
+            }
+            faceImg.src = faceUrl;
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'song_app_edit.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function closeEditor() {
+            document.getElementById('editor').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
