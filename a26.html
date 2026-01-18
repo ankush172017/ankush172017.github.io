@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaheed Bhagat Singh Tribute</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%); /* Indian Flag Colors */
+            text-align: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid #000080;
+        }
+
+        h1 {
+            color: #b22222;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* Start Button Design */
+        #startBtn {
+            background-color: #000080; /* Navy Blue like Chakra */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        #startBtn:hover {
+            background-color: #b22222;
+            transform: scale(1.05);
+        }
+
+        /* Hidden Content */
+        #content {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .lyrics {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            font-weight: bold;
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .emoji-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="emoji-icon">🫡 🇮🇳</div>
+        <h1>Shaheed Bhagat Singh</h1>
+        <p class="subtitle">Inquilab Zindabad!</p>
+
+        <button id="startBtn" onclick="startTribute()">Start Tribute ▶</button>
+
+        <div id="content">
+            <h2 style="color: #FF9933;">मेरा रंग दे बसंती चोला...</h2>
+            <div class="lyrics">
+                <p>मेरा रंग दे बसंती चोला, माय रंग दे...</p>
+                <p>मेरा रंग दे बसंती चोला!</p>
+                <hr>
+                <p>जिस चोले को पहन शिवाजी<br> खेले अपनी जान पे...</p>
+                <p>जिसे पहन झाँसी की रानी<br> मिट गई अपनी आन पे...</p>
+                <p>आज उसी को पहन के निकला<br> हम मस्तों का टोला!</p>
+            </div>
+            
+            <p style="font-size: 12px; color: gray; margin-top: 20px;">
+                (Audio Playing: Mera Rang De Basanti Chola)
+            </p>
+            </div>
+    </div>
+
+    <script>
+        function startTribute() {
+            var btn = document.getElementById('startBtn');
+            var content = document.getElementById('content');
+            
+            // बटन को छुपाएं और कंटेंट दिखाएं
+            btn.style.display = 'none';
+            content.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
