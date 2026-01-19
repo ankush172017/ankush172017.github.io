@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chudail Ka Saaya - Horror Game</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nosifer&family=Creepster&display=swap');
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background: black; font-family: 'Creepster', cursive;
+        }
+
+        .screen {
+            position: absolute; width: 100%; height: 100%;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 1s ease-in-out; text-align: center;
+        }
+
+        /* 1. START SCREEN */
+        #start-screen {
+            display: flex;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://img.freepik.com/free-photo/creepy-scary-ghost-woods_23-2151122676.jpg'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        h1 { color: #ff0000; font-size: 80px; text-shadow: 5px 5px 15px black; margin-bottom: 20px; }
+
+        .btn-start {
+            padding: 20px 60px; font-size: 40px; color: white; background: #8B0000;
+            border: 4px solid #fff; cursor: pointer; border-radius: 10px;
+            box-shadow: 0 0 20px red; transition: 0.3s;
+        }
+
+        .btn-start:hover { transform: scale(1.1); background: red; box-shadow: 0 0 40px red; }
+
+        /* 2. BEDROOM SCREEN */
+        #bedroom-screen {
+            background: #1a0a00;
+        }
+        .bed-img { width: 80%; max-width: 600px; border-bottom: 10px solid #333; }
+        .uncle-face {
+            width: 150px; height: 150px; position: absolute; top: 30%;
+            opacity: 0; transition: 2s; border-radius: 50%; border: 5px solid #222;
+        }
+
+        /* 3. TEAM FIGHT SCREEN */
+        #fight-screen {
+            background: url('https://img.freepik.com/free-photo/scary-burning-forest-night_23-2150916055.jpg');
+            background-size: cover;
+        }
+
+        .team-count {
+            background: rgba(0,0,0,0.8); padding: 10px 30px; border: 2px solid gold;
+            font-size: 30px; color: gold; position: absolute; top: 20px;
+        }
+
+        .witch {
+            width: 300px; animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .army {
+            position: absolute; bottom: 10px; width: 100%;
+            display: flex; justify-content: center; flex-wrap: wrap;
+        }
+
+        .soldier {
+            font-size: 25px; margin: 2px; filter: grayscale(1);
+        }
+
+        .dialogue {
+            color: white; font-size: 24px; margin-top: 20px; background: rgba(0,0,0,0.7);
+            padding: 10px 20px; border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen" class="screen">
+        <h1>DARE TO START?</h1>
+        <button class="btn-start" onclick="goToBedroom()">START</button>
+    </div>
+
+    <div id="bedroom-screen" class="screen">
+        <img src="https://cdn-icons-png.flaticon.com/512/2329/2329865.png" class="bed-img" alt="Bed">
+        <div id="uncle" class="uncle-face">
+            <img src="https://cdn-icons-png.flaticon.com/512/3408/3408455.png" width="100%">
+        </div>
+        <div class="dialogue" id="bed-text">Aap bed par so rahe hain... Sab shant hai...</div>
+    </div>
+
+    <div id="fight-screen" class="screen">
+        <div class="team-count">TEAM SIZE: <span id="counter">0</span> / 2,00,000</div>
+        <img src="https://cdn-icons-png.flaticon.com/512/6245/6245941.png" class="witch" alt="Witch">
+        <div class="dialogue" style="color: red; font-size: 35px;">TEAM ATTACK!!! MARO CHUDAIL KO!</div>
+        <div class="army" id="army-container"></div>
+    </div>
+
+    <script>
+        function goToBedroom() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('bedroom-screen').style.display = 'flex';
+            
+            // Animation for Uncle appearing
+            setTimeout(() => {
+                document.getElementById('uncle').style.opacity = '1';
+                document.getElementById('bed-text').innerText = "Achanak Uncle aaye aur aapko utha liya!";
+                document.getElementById('bed-text').style.color = "orange";
+            }, 2000);
+
+            // Transition to Battle
+            setTimeout(() => {
+                goToFight();
+            }, 5000);
+        }
+
+        function goToFight() {
+            document.getElementById('bedroom-screen').style.display = 'none';
+            document.getElementById('fight-screen').style.display = 'flex';
+            
+            // Counter for 2 Lakh Team
+            let count = 0;
+            let target = 200000;
+            let timer = setInterval(() => {
+                count += 3333; // Speeding up counter
+                if(count >= target) {
+                    count = target;
+                    clearInterval(timer);
+                }
+                document.getElementById('counter').innerText = count.toLocaleString();
+            }, 50);
+
+            // Adding "Visual" Army (just symbols to represent thousands)
+            const armyDiv = document.getElementById('army-container');
+            for(let i=0; i<100; i++) {
+                let s = document.createElement('span');
+                s.className = 'soldier';
+                s.innerText = '🛡️';
+                armyDiv.appendChild(s);
+            }
+        }
+    </script>
+</body>
+</html>
