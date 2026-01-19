@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Modi-Trump vs Chudail</title>
+    <style>
+        body { margin: 0; background: #000; color: white; font-family: 'Arial', sans-serif; overflow: hidden; text-align: center; }
+        .screen { position: absolute; width: 100%; height: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        
+        /* Start Screen */
+        #start { display: flex; background: linear-gradient(red, black); }
+        .btn { padding: 20px 40px; font-size: 30px; cursor: pointer; background: gold; border: none; border-radius: 10px; font-weight: bold; }
+
+        /* Bedroom */
+        #bedroom { background: #111; }
+        .uncle { width: 200px; position: absolute; top: 50px; opacity: 0; transition: 2s; }
+
+        /* Battle */
+        #battle { background: url('https://img.freepik.com/free-photo/creepy-night-forest_23-2150916053.jpg') center/cover; }
+        .hero-box { display: flex; gap: 40px; position: absolute; bottom: 20px; }
+        .hero { width: 180px; }
+        .hero img { width: 100%; border: 3px solid gold; border-radius: 15px; }
+        .witch { width: 250px; animation: float 2s infinite ease-in-out; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+        
+        .hp-bar { width: 300px; height: 20px; background: grey; border: 2px solid #fff; margin-bottom: 20px; }
+        #hp { width: 100%; height: 100%; background: red; }
+    </style>
+</head>
+<body>
+
+    <div id="start" class="screen">
+        <h1>DARAVANI CHUDAIL GAME</h1>
+        <button class="btn" onclick="goBed()">START GAME 😡</button>
+    </div>
+
+    <div id="bedroom" class="screen">
+        <img src="uncle.png" class="uncle" id="uncleImg" alt="">
+        <img src="https://cdn-icons-png.flaticon.com/512/2329/2329865.png" width="300">
+        <h2>Aap so rahe hain... Uncle aa rahe hain!</h2>
+    </div>
+
+    <div id="battle" class="screen">
+        <div style="position:absolute; top:20px; left:20px; font-size:24px; color:gold;">TEAM: 2,00,000</div>
+        <div class="hp-bar"><div id="hp"></div></div>
+        
+        <img src="chudail.png" class="witch" id="witchImg" alt="
+
+[Image of a scary witch cartoon]
+">
+
+        <button class="btn" onclick="attack()" style="margin-bottom: 200px; background: red; color: white;">ATTACK! 🔥</button>
+
+        <div class="hero-box">
+            <div class="hero">
+                <img src="trump.png" alt="">
+                <p>TRUMP (GUN)</p>
+            </div>
+            <div class="hero">
+                <img src="modi.png" alt="">
+                <p>MODI (GUN)</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let health = 100;
+        function goBed() {
+            document.getElementById('start').style.display = 'none';
+            document.getElementById('bedroom').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('uncleImg').style.opacity = '1';
+            }, 1500);
+            setTimeout(goBattle, 4000);
+        }
+        function goBattle() {
+            document.getElementById('bedroom').style.display = 'none';
+            document.getElementById('battle').style.display = 'flex';
+        }
+        function attack() {
+            health -= 10;
+            document.getElementById('hp').style.width = health + "%";
+            document.getElementById('witchImg').style.transform = "scale(1.2)";
+            setTimeout(() => document.getElementById('witchImg').style.transform = "scale(1)", 100);
+            if(health <= 0) alert("Chudail Mar Gayi! Victory!");
+        }
+    </script>
+</body>
+</html>
