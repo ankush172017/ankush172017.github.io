@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trump vs Chudail - The Battle</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Permanent+Marker&display=swap');
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background: black; font-family: 'Creepster', cursive;
+        }
+
+        .screen {
+            position: absolute; width: 100%; height: 100%;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; background-size: cover; background-position: center;
+        }
+
+        /* 1. START SCREEN */
+        #start-screen {
+            display: flex;
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://img.freepik.com/free-photo/scary-monster-emerging-from-darkness_23-2151122690.jpg');
+        }
+
+        h1 { color: #ff0000; font-size: clamp(40px, 8vw, 80px); text-shadow: 5px 5px 20px black; }
+
+        .btn-start, .btn-attack {
+            padding: 15px 50px; font-size: 30px; color: white; background: #ce0000;
+            border: 4px solid gold; cursor: pointer; border-radius: 50px;
+            font-family: 'Permanent Marker', cursive; box-shadow: 0 0 20px red;
+        }
+
+        /* 2. BEDROOM SCREEN */
+        #bedroom-screen { background: #0f0500; }
+        .uncle-img { width: 150px; position: absolute; top: 20%; opacity: 0; transition: 2s; filter: drop-shadow(0 0 10px white); }
+
+        /* 3. FIGHT SCREEN */
+        #fight-screen {
+            background-image: url('https://img.freepik.com/free-photo/misty-forest-landscape-with-creepy-atmosphere_23-2150916053.jpg');
+        }
+
+        .witch-container { position: relative; width: 250px; transition: 0.2s; }
+        .witch-img { width: 100%; animation: float 2s infinite ease-in-out; }
+        
+        .hp-bar-bg { width: 300px; height: 20px; background: #333; border: 2px solid white; margin-bottom: 20px; }
+        #hp-fill { width: 100%; height: 100%; background: red; transition: 0.3s; }
+
+        /* DONALD TRUMP WITH GUN */
+        .trump-unit {
+            position: absolute; bottom: 20%; left: 10%; width: 250px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .trump-img { width: 100%; filter: drop-shadow(0 0 15px gold); }
+        .muzzle-flash {
+            position: absolute; right: -20px; top: 40%; width: 50px;
+            display: none;
+        }
+
+        .team-badge {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.8); color: gold; padding: 15px;
+            border: 2px solid gold; border-radius: 10px; font-size: 20px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .bullet {
+            position: absolute; width: 10px; height: 4px; background: yellow;
+            box-shadow: 0 0 5px orange; border-radius: 2px;
+            animation: shoot 0.4s linear forwards;
+        }
+
+        @keyframes shoot {
+            to { left: 80%; transform: scale(0.5); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen" class="screen">
+        <h1>THE CURSE OF THE WITCH</h1>
+        <button class="btn-start" onclick="startStory()">START GAME</button>
+    </div>
+
+    <div id="bedroom-screen" class="screen">
+        <img src="https://cdn-icons-png.flaticon.com/512/2329/2329865.png" width="300" style="margin-top:100px;">
+        <img id="uncle" src="https://cdn-icons-png.flaticon.com/512/3408/3408455.png" class="uncle-img">
+        <h2 id="msg" style="color:white; margin-top:20px;">Aap bed par so rahe hain...</h2>
+    </div>
+
+    <div id="fight-screen" class="screen">
+        <div class="team-badge">TEAM: <span id="team-count">0</span> / 2,00,000</div>
+        
+        <div class="hp-bar-bg"><div id="hp-fill"></div></div>
+        
+        <div class="witch-container" id="witch-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/6245/6245941.png" class="witch-img">
+        </div>
+
+        <div class="trump-unit">
+            <img src="https://i.ibb.co/3sS7CjL/trump-pixel-placeholder.png" class="trump-img" alt="Trump with Gun">
+            <div id="flash" class="muzzle-flash">💥</div>
+            <div style="color: white; background: blue; padding: 5px;">COMMANDER TRUMP</div>
+        </div>
+
+        <button class="btn-attack" onclick="attackWitch()" id="atk-btn" style="margin-top: 250px;">FIRE GUN (ATTACK!)</button>
+        <h2 id="win-msg" style="color: gold; display: none;">VICTORY! CHUDAIL KHATAM!</h2>
+    </div>
+
+    <script>
+        let hp = 100;
+
+        function startStory() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('bedroom-screen').style.display = 'flex';
+            
+            setTimeout(() => {
+                document.getElementById('uncle').style.opacity = '1';
+                document.getElementById('msg').innerText = "UNCLE AAYE HAI! UTTHO!";
+                document.getElementById('msg').style.color = "red";
+            }, 1500);
+
+            setTimeout(startBattle, 4000);
+        }
+
+        function startBattle() {
+            document.getElementById('bedroom-screen').style.display = 'none';
+            document.getElementById('fight-screen').style.display = 'flex';
+            
+            // Team count animation
+            let count = 0;
+            let counter = setInterval(() => {
+                count += 4000;
+                if(count >= 200000) { count = 200000; clearInterval(counter); }
+                document.getElementById('team-count').innerText = count.toLocaleString();
+            }, 30);
+        }
+
+        function attackWitch() {
+            if(hp <= 0) return;
+
+            // Gun firing effect
+            const flash = document.getElementById('flash');
+            flash.style.display = 'block';
+            setTimeout(() => flash.style.display = 'none', 100);
+
+            // Bullet animation
+            const bullet = document.createElement('div');
+            bullet.className = 'bullet';
+            bullet.style.left = '20%';
+            bullet.style.bottom = '40%';
+            document.getElementById('fight-screen').appendChild(bullet);
+            setTimeout(() => bullet.remove(), 400);
+
+            // Witch damage
+            hp -= 10;
+            document.getElementById('hp-fill').style.width = hp + "%";
+            
+            const witch = document.getElementById('witch-box');
+            witch.style.transform = "translateX(20px)";
+            setTimeout(() => witch.style.transform = "translateX(0)", 100);
+
+            if(hp <= 0) {
+                document.getElementById('hp-fill').style.width = "0%";
+                document.getElementById('witch-box').style.opacity = '0';
+                document.getElementById('atk-btn').style.display = 'none';
+                document.getElementById('win-msg').style.display = 'block';
+                document.body.style.backgroundColor = "green";
+            }
+        }
+    </script>
+</body>
+</html>
