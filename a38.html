@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trump & Modi: Chudail Hunter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Metal+Mania&display=swap');
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background: #000; font-family: 'Creepster', cursive;
+        }
+
+        /* Screens */
+        .screen {
+            position: absolute; width: 100%; height: 100%;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            background-size: cover; background-position: center;
+        }
+
+        /* 1. START SCREEN */
+        #start-screen {
+            display: flex;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=1000&auto=format&fit=crop');
+        }
+        .main-logo { font-size: 90px; color: #ff0000; text-shadow: 0 0 30px #f00, 5px 5px 5px #000; text-align: center; }
+        .btn-start {
+            margin-top: 40px; padding: 25px 80px; font-size: 45px; color: gold;
+            background: linear-gradient(#800, #400); border: 4px solid gold; cursor: pointer;
+            border-radius: 15px; font-family: 'Metal Mania', cursive; box-shadow: 0 0 50px red;
+        }
+
+        /* 2. BEDROOM SCREEN */
+        #bedroom-screen { background: #0a0500; }
+        .bed-container { position: relative; width: 500px; }
+        .bed-img { width: 100%; filter: drop-shadow(0 0 20px #555); }
+        .uncle-face {
+            width: 280px; position: absolute; top: -150px; left: 110px;
+            opacity: 0; transition: transform 2s, opacity 2s;
+        }
+
+        /* 3. BATTLE SCREEN */
+        #battle-screen {
+            background-image: url('https://img.freepik.com/free-photo/mysterious-dark-forest-with-eerie-fog_23-2150916053.jpg');
+        }
+        .witch-box { width: 350px; position: relative; z-index: 5; transition: 0.1s; }
+        .witch-img { width: 100%; animation: witchMove 3s infinite ease-in-out; filter: drop-shadow(0 0 40px #0f0); }
+
+        /* HP BAR */
+        .hp-bar { width: 450px; height: 35px; background: #222; border: 3px solid white; border-radius: 20px; overflow: hidden; margin-bottom: 30px; }
+        #hp-fill { width: 100%; height: 100%; background: linear-gradient(to right, #f00, #900); transition: 0.3s; }
+
+        /* HEROES (TRUMP & MODI) */
+        .hero-squad {
+            display: flex; position: absolute; bottom: 0; width: 100%; justify-content: space-around; align-items: flex-end;
+        }
+        .hero { width: 250px; position: relative; transition: 0.2s; }
+        .hero img { width: 100%; filter: drop-shadow(0 0 15px rgba(255,255,255,0.5)); }
+        .weapon { position: absolute; width: 120px !important; top: 45%; right: -50px; transform: rotate(-15deg); }
+
+        /* COUNTER & BUTTON */
+        .army-badge {
+            position: absolute; top: 20px; left: 20px; padding: 15px; border: 3px solid #0f0;
+            background: rgba(0,0,0,0.8); color: #0f0; font-size: 28px; border-radius: 10px;
+        }
+        .btn-attack {
+            position: absolute; bottom: 350px; padding: 20px 60px; font-size: 40px;
+            background: #ff0000; color: white; border: none; border-radius: 50px;
+            cursor: pointer; font-weight: bold; box-shadow: 0 0 30px red;
+        }
+
+        @keyframes witchMove { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-50px) rotate(5deg); } }
+
+        .bullet {
+            position: absolute; width: 25px; height: 8px; background: #fff;
+            box-shadow: 0 0 15px #fff, 0 0 5px yellow; border-radius: 10px;
+            animation: fly 0.3s linear forwards;
+        }
+        @keyframes fly { to { transform: translateY(-500px); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen" class="screen">
+        <div class="main-logo">BHAYANKAR CHUDAIL<br><small style="font-size:30px; color:white;">Trump & Modi vs Evil</small></div>
+        <button class="btn-start" onclick="showBedroom()">PLAY NOW</button>
+    </div>
+
+    <div id="bedroom-screen" class="screen">
+        <div class="bed-container">
+            <img src="https://cdn-icons-png.flaticon.com/512/2329/2329865.png" class="bed-img">
+            <img id="uncle" src="https://www.pngall.com/wp-content/uploads/8/Scary-Face-PNG-Image.png" class="uncle-face">
+        </div>
+        <h2 id="status" style="color:white; font-size:40px; margin-top:50px;">Aap chain se so rahe hain...</h2>
+    </div>
+
+    <div id="battle-screen" class="screen">
+        <div class="army-badge">ARMY: <span id="team-val">0</span> / 2,00,000</div>
+        
+        <div class="hp-bar"><div id="hp-fill"></div></div>
+
+        <div class="witch-box" id="witch">
+            <img src="https://www.pngarts.com/files/3/Horror-Witch-PNG-Image-Transparent-Background.png" class="witch-img">
+        </div>
+
+        <button class="btn-attack" onclick="attack()">SHOOT NOW! 🔥</button>
+
+        <div class="hero-squad">
+            <div class="hero" id="trump-unit">
+                <img src="https://www.pngall.com/wp-content/uploads/2016/06/Donald-Trump-PNG-File.png" alt="Trump">
+                <img src="https://www.pngall.com/wp-content/uploads/2016/05/Gun-PNG-Clipart.png" class="weapon">
+                <p style="background:blue; color:white; padding:5px;">COMMANDER TRUMP</p>
+            </div>
+            <div class="hero" id="modi-unit">
+                <img src="https://www.pngall.com/wp-content/uploads/15/Narendra-Modi-PNG-Picture.png" alt="Modi">
+                <img src="https://www.pngall.com/wp-content/uploads/2016/05/Gun-PNG-Clipart.png" class="weapon">
+                <p style="background:orange; color:white; padding:5px;">COMMANDER MODI</p>
+            </div>
+        </div>
+
+        <h1 id="victory" style="display:none; color:gold; background:rgba(0,0,0,0.9); padding:40px; border:10px solid gold; z-index:20;">MISSION ACCOMPLISHED! CHUDAIL KHATAM!</h1>
+    </div>
+
+    <script>
+        let health = 100;
+
+        function showBedroom() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('bedroom-screen').style.display = 'flex';
+            
+            setTimeout(() => {
+                const u = document.getElementById('uncle');
+                u.style.opacity = '1';
+                u.style.transform = 'translateY(100px)';
+                document.getElementById('status').innerText = "UNCLE NE UTHA LIYA! CHALO JUNG PE!";
+                document.getElementById('status').style.color = "red";
+            }, 2000);
+
+            setTimeout(showBattle, 5000);
+        }
+
+        function showBattle() {
+            document.getElementById('bedroom-screen').style.display = 'none';
+            document.getElementById('battle-screen').style.display = 'flex';
+            
+            let count = 0;
+            let timer = setInterval(() => {
+                count += 5000;
+                if(count >= 200000) { count = 200000; clearInterval(timer); }
+                document.getElementById('team-val').innerText = count.toLocaleString();
+            }, 40);
+        }
+
+        function attack() {
+            if(health <= 0) return;
+
+            // Shooting Effect
+            for(let i=0; i<2; i++) {
+                let b = document.createElement('div');
+                b.className = 'bullet';
+                b.style.left = (30 + (i*40)) + "%";
+                b.style.bottom = "180px";
+                document.getElementById('battle-screen').appendChild(b);
+                setTimeout(() => b.remove(), 300);
+            }
+
+            // Heroes jump on fire
+            document.getElementById('trump-unit').style.transform = "translateY(-10px)";
+            document.getElementById('modi-unit').style.transform = "translateY(-10px)";
+            setTimeout(() => {
+                document.getElementById('trump-unit').style.transform = "translateY(0)";
+                document.getElementById('modi-unit').style.transform = "translateY(0)";
+            }, 100);
+
+            // Damage Witch
+            health -= 10;
+            document.getElementById('hp-fill').style.width = health + "%";
+            
+            const w = document.getElementById('witch');
+            w.style.transform = "scale(1.3) rotate(15deg)";
+            w.style.filter = "brightness(5) invert(1)";
+            setTimeout(() => {
+                w.style.transform = "scale(1)";
+                w.style.filter = "drop-shadow(0 0 40px #0f0)";
+            }, 100);
+
+            if(health <= 0) {
+                document.getElementById('witch').style.display = 'none';
+                document.querySelector('.btn-attack').style.display = 'none';
+                document.getElementById('victory').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
