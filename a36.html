@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Battle: Trump & Modi vs Chudail</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Permanent+Marker&display=swap');
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background: black; font-family: 'Creepster', cursive;
+        }
+
+        .screen {
+            position: absolute; width: 100%; height: 100%;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            background-size: cover; background-position: center;
+        }
+
+        /* 1. START SCREEN */
+        #start-screen {
+            display: flex;
+            background-image: url('https://images.unsplash.com/photo-1505635552518-3448ff116bd3?q=80&w=1000&auto=format&fit=crop');
+        }
+
+        .main-title { color: #ff0000; font-size: 70px; text-shadow: 5px 5px 20px black; margin-bottom: 30px; }
+
+        .btn-start {
+            padding: 20px 60px; font-size: 35px; color: gold; background: #600;
+            border: 5px solid gold; cursor: pointer; border-radius: 10px;
+            font-family: 'Permanent Marker', cursive; box-shadow: 0 0 30px red;
+        }
+
+        /* 2. BEDROOM SCREEN */
+        #bedroom-screen { background: #110a00; }
+        .uncle-img { 
+            width: 250px; border-radius: 50%; border: 5px solid #444;
+            position: absolute; top: 15%; opacity: 0; transition: 2s; 
+            filter: grayscale(0.5) contrast(1.5);
+        }
+
+        /* 3. FIGHT SCREEN */
+        #fight-screen {
+            background-image: url('https://img.freepik.com/free-photo/dark-forest-with-mysterious-light_23-2150916057.jpg');
+        }
+
+        .witch-box { width: 280px; position: relative; transition: 0.1s; z-index: 10; }
+        .witch-img { width: 100%; animation: witchFloat 2s infinite ease-in-out; filter: drop-shadow(0 0 20px green); }
+
+        .hp-container { width: 80%; max-width: 500px; height: 30px; background: #222; border: 3px solid #fff; margin-bottom: 20px; border-radius: 15px; overflow: hidden; }
+        #hp-fill { width: 100%; height: 100%; background: linear-gradient(to right, red, orange); transition: 0.3s; }
+
+        /* HEROES AREA */
+        .heroes-container {
+            display: flex; justify-content: space-around; width: 100%;
+            position: absolute; bottom: 50px;
+        }
+
+        .hero-unit { width: 180px; text-align: center; position: relative; }
+        .hero-img { width: 100%; border-radius: 10px; filter: drop-shadow(0 0 15px cyan); }
+        .gun-img { width: 80px; position: absolute; right: -30px; top: 50%; transform: rotate(-10deg); }
+
+        .team-badge {
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(0,0,0,0.8); color: #0f0; padding: 10px 20px;
+            border: 2px solid #0f0; font-size: 24px; border-radius: 5px;
+        }
+
+        .btn-attack {
+            position: absolute; bottom: 250px; padding: 15px 40px;
+            font-size: 30px; background: red; color: white; border: none;
+            border-radius: 50px; cursor: pointer; font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        @keyframes witchFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+
+        .bullet {
+            position: absolute; width: 15px; height: 5px; background: yellow;
+            box-shadow: 0 0 10px orange; border-radius: 5px; z-index: 5;
+            animation: shootAnim 0.4s linear forwards;
+        }
+
+        @keyframes shootAnim { to { transform: translateY(-300px) scale(0); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen" class="screen">
+        <h1 class="main-title">CHUDAIL KA ANTH</h1>
+        <button class="btn-start" onclick="startStory()">START ADVENTURE</button>
+    </div>
+
+    <div id="bedroom-screen" class="screen">
+        <h2 style="color: white; margin-bottom: 250px; font-size: 30px;">Aap so rahe hain...</h2>
+        <img src="https://www.pngall.com/wp-content/uploads/2016/07/Bed-Free-PNG-Image.png" width="400">
+        <img id="uncle" src="https://cdn-icons-png.flaticon.com/512/805/805370.png" class="uncle-img">
+        <h1 id="warning" style="color: red; position: absolute; bottom: 50px; display: none;">UNCLE NE UTHA LIYA! BHAAGO!</h1>
+    </div>
+
+    <div id="fight-screen" class="screen">
+        <div class="team-badge">ARMY: <span id="t-count">0</span> / 2,00,000</div>
+        
+        <div class="hp-container"><div id="hp-fill"></div></div>
+
+        <div class="witch-box" id="witch">
+            <img src="https://www.pngarts.com/files/3/Horror-Witch-PNG-Image-Transparent-Background.png" class="witch-img">
+        </div>
+
+        <button class="btn-attack" onclick="fireGuns()">🔥 DOUBLE ATTACK 🔥</button>
+
+        <div class="heroes-container">
+            <div class="hero-unit">
+                <img src="https://www.pngall.com/wp-content/uploads/2016/06/Donald-Trump-PNG-File.png" class="hero-img">
+                <img src="https://www.pngall.com/wp-content/uploads/2016/05/Gun-PNG-Clipart.png" class="gun-img">
+                <div style="background:blue; color:white; font-family: sans-serif;">TRUMP</div>
+            </div>
+
+            <div class="hero-unit">
+                <img src="https://www.pngall.com/wp-content/uploads/15/Narendra-Modi-PNG-Picture.png" class="hero-img">
+                <img src="https://www.pngall.com/wp-content/uploads/2016/05/Gun-PNG-Clipart.png" class="gun-img">
+                <div style="background:orange; color:white; font-family: sans-serif;">MODI</div>
+            </div>
+        </div>
+
+        <h1 id="win-msg" style="color: gold; display: none; background: rgba(0,0,0,0.8); padding: 20px; border: 5px solid gold;">CONGRATULATIONS! TEAM WON!</h1>
+    </div>
+
+    <script>
+        let witchHP = 100;
+
+        function startStory() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('bedroom-screen').style.display = 'flex';
+            
+            setTimeout(() => {
+                document.getElementById('uncle').style.opacity = '1';
+                document.getElementById('warning').style.display = 'block';
+            }, 2000);
+
+            setTimeout(goToFight, 5000);
+        }
+
+        function goToFight() {
+            document.getElementById('bedroom-screen').style.display = 'none';
+            document.getElementById('fight-screen').style.display = 'flex';
+            
+            // Team count animation
+            let count = 0;
+            let counter = setInterval(() => {
+                count += 5000;
+                if(count >= 200000) { count = 200000; clearInterval(counter); }
+                document.getElementById('t-count').innerText = count.toLocaleString();
+            }, 50);
+        }
+
+        function fireGuns() {
+            if(witchHP <= 0) return;
+
+            // Create bullets for both
+            for(let i=0; i<2; i++) {
+                let b = document.createElement('div');
+                b.className = 'bullet';
+                b.style.left = (35 + (i*30)) + "%";
+                b.style.bottom = "150px";
+                document.getElementById('fight-screen').appendChild(b);
+                setTimeout(() => b.remove(), 400);
+            }
+
+            // Damage witch
+            witchHP -= 10;
+            document.getElementById('hp-fill').style.width = witchHP + "%";
+            
+            // Shake witch
+            const w = document.getElementById('witch');
+            w.style.transform = "scale(1.2)";
+            w.style.filter = "brightness(5) sepia(1) hue-rotate(90deg)";
+            setTimeout(() => {
+                w.style.transform = "scale(1)";
+                w.style.filter = "drop-shadow(0 0 20px green)";
+            }, 100);
+
+            if(witchHP <= 0) {
+                document.getElementById('hp-fill').parentElement.style.display = 'none';
+                w.style.display = 'none';
+                document.querySelector('.btn-attack').style.display = 'none';
+                document.getElementById('win-msg').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
