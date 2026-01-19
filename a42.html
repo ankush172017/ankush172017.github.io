@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trump-Modi vs Chudail Final</title>
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; font-family: 'Arial Black', sans-serif; }
+        .screen { position: absolute; width: 100%; height: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        
+        /* Start Screen */
+        #start { display: flex; background: radial-gradient(circle, #800, #000); }
+        h1 { font-size: 60px; color: #ff0; text-shadow: 4px 4px #f00; margin-bottom: 20px; }
+
+        /* Bedroom Screen */
+        #bedroom { background: #1a1a1a; }
+        .uncle { width: 250px; position: absolute; top: 10%; opacity: 0; transition: 2s; filter: drop-shadow(0 0 15px red); }
+        .bed { width: 450px; margin-top: 100px; }
+
+        /* Battle Screen */
+        #battle { background: url('https://img.freepik.com/free-photo/mysterious-dark-forest_23-2150916053.jpg') center/cover; }
+        .witch-box { width: 250px; margin-bottom: 30px; }
+        .witch { width: 100%; animation: move 2s infinite ease-in-out; filter: drop-shadow(0 0 20px green); }
+        
+        /* Heroes Area */
+        .hero-team { display: flex; gap: 40px; position: absolute; bottom: 20px; }
+        .hero { width: 180px; background: rgba(0,0,0,0.6); padding: 15px; border: 3px solid gold; border-radius: 20px; }
+        .hero img { width: 100%; height: 200px; object-fit: contain; }
+        .gun-icon { width: 80px !important; height: auto !important; position: absolute; top: 40%; right: -30px; transform: rotate(-15deg); }
+
+        .hp-bar { width: 350px; height: 25px; background: #333; border: 2px solid #fff; border-radius: 15px; overflow: hidden; margin-bottom: 20px; }
+        #hp { width: 100%; height: 100%; background: #f00; transition: 0.3s; }
+        
+        .btn { padding: 15px 50px; font-size: 30px; background: #f00; color: #fff; border: none; cursor: pointer; border-radius: 50px; box-shadow: 0 5px 15px #000; font-weight: bold; }
+        .army-stats { position: absolute; top: 20px; left: 20px; background: gold; color: #000; padding: 10px 20px; font-size: 24px; border: 3px solid #000; }
+        
+        @keyframes move { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-40px); } }
+    </style>
+</head>
+<body>
+
+    <div id="start" class="screen">
+        <h1>CHUDAIL KA ANTH 😡</h1>
+        <button class="btn" onclick="goBed()">START GAME</button>
+    </div>
+
+    <div id="bedroom" class="screen">
+        
+        <img src="https://www.pngall.com/wp-content/uploads/8/Scary-Face-PNG-Image.png" class="uncle" id="u-face">
+        <img src="https://www.pngall.com/wp-content/uploads/2016/07/Bed-Free-PNG-Image.png" class="bed">
+        <h2 id="txt" style="color:white; margin-top:20px;">Aap chain se so rahe hain...</h2>
+    </div>
+
+    <div id="battle" class="screen">
+        <div class="army-stats">ARMY: <span id="team">0</span> / 2,00,000</div>
+        <div class="hp-bar"><div id="hp"></div></div>
+        
+        <div class="witch-box">
+            
+
+[Image of a scary witch cartoon]
+
+            <img src="https://www.pngarts.com/files/3/Horror-Witch-PNG-Image-Transparent-Background.png" class="witch" id="witch-img">
+        </div>
+
+        <button class="btn" onclick="attack()" style="margin-bottom: 220px; background: orange;">🔥 SHOOT (ATTACK) 🔥</button>
+
+        <div class="hero-team">
+            <div class="hero">
+                
+                <img src="https://www.pngall.com/wp-content/uploads/2016/06/Donald-Trump-PNG-File.png">
+                <img src="https://www.pngall.com/wp-content/uploads/2016/05/Gun-PNG-Clipart.png" class="gun-icon">
+                <p style="color:cyan; margin:5px 0 0 0;">TRUMP</p>
+            </div>
+            <div class="hero">
+                
+                <img src="https://www.pngall.com/wp-content/uploads/15/Narendra-Modi-PNG-Picture.png">
+                <img src="https://www.pngall.com/wp-content/uploads/2016/05/Gun-PNG-Clipart.png" class="gun-icon">
+                <p style="color:orange; margin:5px 0 0 0;">MODI</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let health = 100;
+
+        function goBed() {
+            document.getElementById('start').style.display = 'none';
+            document.getElementById('bedroom').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('u-face').style.opacity = '1';
+                document.getElementById('txt').innerText = "UNCLE NE UTHA LIYA! JALDI BHAAGO!";
+                document.getElementById('txt').style.color = "red";
+            }, 2000);
+            setTimeout(goBattle, 5000);
+        }
+
+        function goBattle() {
+            document.getElementById('bedroom').style.display = 'none';
+            document.getElementById('battle').style.display = 'flex';
+            let c = 0;
+            let timer = setInterval(() => {
+                c += 5000;
+                if(c >= 200000) { c = 200000; clearInterval(timer); }
+                document.getElementById('team').innerText = c.toLocaleString();
+            }, 40);
+        }
+
+        function attack() {
+            if(health <= 0) return;
+            health -= 10;
+            document.getElementById('hp').style.width = health + "%";
+            
+            const w = document.getElementById('witch-img');
+            w.style.transform = "scale(1.4) rotate(15deg)";
+            w.style.filter = "brightness(5) sepia(1)";
+            setTimeout(() => {
+                w.style.transform = "scale(1)";
+                w.style.filter = "drop-shadow(0 0 20px green)";
+            }, 100);
+
+            if(health <= 0) {
+                alert("ZINDABAAD! 2 LAKH TEAM JEET GAYI!");
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
