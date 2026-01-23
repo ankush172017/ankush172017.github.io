@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500-Inch Style Long Scientist Gallery</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #050505;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            text-align: center;
+        }
+
+        header {
+            padding: 50px;
+            background: linear-gradient(to bottom, #111, #050505);
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            color: #00d4ff;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px #00d4ff;
+        }
+
+        /* Long Photo Container */
+        .sc-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 100px; /* Space between scientists */
+            padding: 50px 0;
+        }
+
+        .sc-card {
+            width: 80%;
+            max-width: 900px;
+            background: #111;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 4px solid #333;
+            transition: 0.5s;
+        }
+
+        .sc-card:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Giant Long Photo Style */
+        .photo-box {
+            width: 100%;
+            height: 1200px; /* Extremely Long Photo */
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Chehra zoom hokar long dikhega */
+            transition: 0.8s;
+            filter: grayscale(50%);
+        }
+
+        .sc-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+
+        /* Speaking Animation Layer */
+        .talking-wave {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background: rgba(0, 212, 255, 0.2);
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .speaking .talking-wave {
+            display: block;
+            animation: wave-up 0.5s infinite alternate;
+        }
+
+        @keyframes wave-up {
+            from { height: 50px; }
+            to { height: 150px; }
+        }
+
+        .details {
+            padding: 40px;
+            background: #111;
+        }
+
+        .name { font-size: 3rem; margin-bottom: 10px; color: #fff; }
+        .field { color: #00d4ff; font-size: 1.2rem; margin-bottom: 30px; letter-spacing: 5px; }
+
+        .speech-btn {
+            background: #00d4ff;
+            color: black;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.3s;
+        }
+
+        .speech-btn.hindi { background: #ff8800; }
+
+        .speech-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px white; }
+
+        .quote-text {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            color: #ccc;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="main-title">The Giant Minds</h1>
+    <p>10 Greatest Scientists - Vertical Long View</p>
+</header>
+
+<div class="sc-container" id="gallery">
+    </div>
+
+<script>
+    const data = [
+        { name: "Isaac Newton", job: "Gravity Specialist", img: "https://upload.wikimedia.org/wikipedia/commons/3/39/GodfreyKneller-IsaacNewton-1689.jpg", en: "I can calculate the motion of heavenly bodies, but not the madness of people.", hi: "मैं खगोलीय पिंडों की गति की गणना कर सकता हूँ, लेकिन लोगों के पागलपन की नहीं।" },
+        { name: "Albert Einstein", job: "Relativity Expert", img: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_Head.jpg", en: "A person who never made a mistake never tried anything new.", hi: "जिस व्यक्ति ने कभी गलती नहीं की, उसने कभी कुछ नया करने की कोशिश नहीं की।" },
+        { name: "APJ Abdul Kalam", job: "Aerospace Pioneer", img: "https://upload.wikimedia.org/wikipedia/commons/6/6e/A._P._J._Abdul_Kalam.jpg", en: "Excellence is a continuous process and not an accident.", hi: "उत्कृष्टता एक सतत प्रक्रिया है, कोई दुर्घटना नहीं।" },
+        { name: "Nikola Tesla", job: "Electricity Genius", img: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1000", en: "If you want to find the secrets of the universe, think in terms of energy, frequency and vibration.", hi: "यदि आप ब्रह्मांड के रहस्यों को खोजना चाहते हैं, तो ऊर्जा, आवृत्ति और कंपन के संदर्भ में सोचें।" },
+        { name: "Marie Curie", job: "Radioactivity", img: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Marie_Curie_c1920.jpg", en: "Now is the time to understand more, so that we may fear less.", hi: "अब समय आ गया है कि हम और अधिक समझें, ताकि हम कम डरें।" },
+        { name: "Stephen Hawking", job: "Cosmologist", img: "https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg", en: "However difficult life may seem, there is always something you can do and succeed at.", hi: "जीवन चाहे कितना भी कठिन क्यों न लगे, हमेशा कुछ न कुछ होता है जिसे आप कर सकते हैं और सफल हो सकते हैं।" },
+        { name: "C.V. Raman", job: "Physicist", img: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Sir_C._V._Raman.jpg", en: "Success can come to you by courageous devotion to the task.", hi: "कार्य के प्रति साहसी समर्पण से आपको सफलता मिल सकती है।" },
+        { name: "Charles Darwin", job: "Evolutionist", img: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Charles_Darwin_seated_crop.jpg", en: "A man who dares to waste one hour of time has not discovered the value of life.", hi: "वह व्यक्ति जो एक घंटा बर्बाद करने की हिम्मत करता है, उसने जीवन के मूल्य की खोज नहीं की है।" },
+        { name: "Thomas Edison", job: "Inventor", img: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Thomas_Edison2.jpg", en: "Our greatest weakness lies in giving up.", hi: "हमारी सबसे बड़ी कमजोरी हार मान लेने में निहित है।" },
+        { name: "Galileo Galilei", job: "Astronomer", img: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg", en: "Nature is relentless and unchangeable.", hi: "प्रकृति अथक और अपरिवर्तनीय है।" }
+    ];
+
+    const container = document.getElementById('gallery');
+
+    data.forEach((s, i) => {
+        container.innerHTML += `
+            <div class="sc-card" id="sc-${i}">
+                <div class="photo-box" onclick="speak('${s.en.replace(/'/g, "\\'")}', 'en-US', ${i})">
+                    <img src="${s.img}" alt="${s.name}">
+                    <div class="talking-wave"></div>
+                </div>
+                <div class="details">
+                    <div class="name">${s.name}</div>
+                    <div class="field">${s.job}</div>
+                    <p class="quote-text">"${s.en}"</p>
+                    <p class="quote-text" style="color:#ff8800">"${s.hi}"</p>
+                    <button class="speech-btn" onclick="speak('${s.en.replace(/'/g, "\\'")}', 'en-US', ${i})">🔊 English Voice</button>
+                    <button class="speech-btn hindi" onclick="speak('${s.hi.replace(/'/g, "\\'")}', 'hi-IN', ${i})">🔊 Hindi Voice</button>
+                </div>
+            </div>
+        `;
+    });
+
+    function speak(text, lang, id) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang;
+        utterance.rate = 0.85;
+
+        const card = document.getElementById(`sc-${id}`);
+        card.classList.add('speaking');
+
+        utterance.onend = () => card.classList.remove('speaking');
+        window.speechSynthesis.speak(utterance);
+    }
+</script>
+
+</body>
+</html>
