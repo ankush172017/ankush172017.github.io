@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 10 Speaking Scientists</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --dark-blue: #0f172a;
+            --science-blue: #38bdf8;
+            --hindi-color: #fb923c;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #020617;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(to bottom, #1e293b, #020617);
+        }
+
+        h1 { font-size: 3em; color: var(--science-blue); margin: 0; }
+        
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            padding: 40px;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        /* --- Long Photo Card Design --- */
+        .card {
+            background: #1e293b;
+            border-radius: 25px;
+            overflow: hidden;
+            transition: 0.4s;
+            border: 1px solid #334155;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            border-color: var(--science-blue);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Long Portrait Image */
+        .img-box {
+            width: 100%;
+            height: 450px; /* Long Photo Look */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Chehra sahi dikhega */
+            filter: grayscale(30%);
+            transition: 0.5s;
+        }
+
+        .card:hover img { filter: grayscale(0%); transform: scale(1.05); }
+
+        /* Animation when speaking */
+        .speaking .img-box::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: 8px solid var(--science-blue);
+            animation: pulse-border 1s infinite;
+            box-sizing: border-box;
+        }
+
+        @keyframes pulse-border {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.1); }
+        }
+
+        .info { padding: 25px; text-align: center; }
+
+        .name { font-size: 1.6em; font-weight: bold; margin-bottom: 5px; }
+        .field { color: var(--science-blue); font-size: 0.9em; text-transform: uppercase; margin-bottom: 20px; }
+
+        .quote-container {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            min-height: 100px;
+        }
+
+        .q-eng { color: #e2e8f0; font-style: italic; margin-bottom: 10px; font-size: 0.95em; }
+        .q-hin { color: var(--hindi-color); font-weight: 500; }
+
+        .btns { display: flex; gap: 10px; justify-content: center; }
+
+        button {
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .btn-eng { background: var(--science-blue); color: #000; }
+        .btn-hin { background: var(--hindi-color); color: #000; }
+
+        button:hover { opacity: 0.8; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>World's Masterminds</h1>
+    <p>ये वैज्ञानिक खुद अपनी जुबानी बताएंगे अपने विचार</p>
+</header>
+
+<div class="container" id="gallery"></div>
+
+<script>
+    const scientists = [
+        { name: "Dr. APJ Abdul Kalam", field: "Aeronautics", img: "https://upload.wikimedia.org/wikipedia/commons/6/6e/A._P._J._Abdul_Kalam.jpg", eng: "Dream is not that which you see while sleeping, it is something that does not let you sleep.", hin: "सपने वो नहीं जो आप सोते समय देखते हैं, सपने वो हैं जो आपको सोने नहीं देते।" },
+        { name: "Albert Einstein", field: "Physics", img: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_Head.jpg", eng: "Life is like riding a bicycle. To keep your balance, you must keep moving.", hin: "जीवन एक साइकिल चलाने जैसा है। संतुलन बनाए रखने के लिए, आपको चलते रहना चाहिए।" },
+        { name: "Isaac Newton", field: "Mathematics", img: "https://upload.wikimedia.org/wikipedia/commons/3/39/GodfreyKneller-IsaacNewton-1689.jpg", eng: "If I have seen further, it is by standing on the shoulders of Giants.", hin: "अगर मैं औरों से आगे देख पाया हूँ, तो इसलिए क्योंकि मैं दिग्गजों के कंधों पर खड़ा था।" },
+        { name: "Nikola Tesla", field: "Electricity", img: "https://upload.wikimedia.org/wikipedia/commons/7/79/Tesla_circa_1890.jpeg", eng: "The individual is ephemeral, races and nations come and pass, but man remains.", hin: "व्यक्ति क्षणभंगुर है, जातियां और राष्ट्र आते-जाते हैं, लेकिन मानवता बनी रहती है।" },
+        { name: "Marie Curie", field: "Radioactivity", img: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Marie_Curie_c1920.jpg", eng: "Be less curious about people and more curious about ideas.", hin: "लोगों के बारे में कम और विचारों के बारे में अधिक उत्सुक रहें।" },
+        { name: "Stephen Hawking", field: "Cosmology", img: "https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg", eng: "Intelligence is the ability to adapt to change.", hin: "बुद्धिमत्ता बदलाव के साथ ढलने की क्षमता है।" },
+        { name: "C.V. Raman", field: "Light Physics", img: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Sir_C._V._Raman.jpg", eng: "The essence of science is independent thinking and hard work.", hin: "विज्ञान का सार स्वतंत्र सोच और कड़ी मेहनत है।" },
+        { name: "Thomas Edison", field: "Inventions", img: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Thomas_Edison2.jpg", eng: "I have not failed. I've just found 10,000 ways that won't work.", hin: "मैं असफल नहीं हुआ हूँ। मैंने बस 10,000 ऐसे तरीके खोजे हैं जो काम नहीं करते।" },
+        { name: "Charles Darwin", field: "Biology", img: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Charles_Darwin_seated_crop.jpg", eng: "It is not the strongest of the species that survives, but the one most responsive to change.", hin: "जीवित रहने वाली प्रजातियों में सबसे मजबूत नहीं, बल्कि वे होते हैं जो बदलाव के प्रति सबसे ज्यादा संवेदनशील होते हैं।" },
+        { name: "Galileo Galilei", field: "Astronomy", img: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg", eng: "All truths are easy to understand once they are discovered; the point is to discover them.", hin: "एक बार खोजे जाने के बाद सभी सत्य समझना आसान होता है; असली बात उन्हें खोजना है।" }
+    ];
+
+    const gallery = document.getElementById('gallery');
+
+    scientists.forEach((s, index) => {
+        gallery.innerHTML += `
+            <div class="card" id="card-${index}">
+                <div class="img-box">
+                    <img src="${s.img}" alt="${s.name}">
+                </div>
+                <div class="info">
+                    <div class="name">${s.name}</div>
+                    <div class="field">${s.field}</div>
+                    <div class="quote-container">
+                        <div class="q-eng">"${s.eng}"</div>
+                        <div class="q-hin">"${s.hin}"</div>
+                    </div>
+                    <div class="btns">
+                        <button class="btn-eng" onclick="speak('${s.eng.replace(/'/g, "\\'")}', 'en-US', ${index})">
+                            <i class="fas fa-volume-up"></i> English
+                        </button>
+                        <button class="btn-hin" onclick="speak('${s.hin.replace(/'/g, "\\'")}', 'hi-IN', ${index})">
+                            <i class="fas fa-volume-up"></i> हिंदी
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    function speak(text, lang, id) {
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = lang;
+        msg.rate = 0.9;
+        
+        const card = document.getElementById(`card-${id}`);
+        card.classList.add('speaking');
+        
+        msg.onend = () => card.classList.remove('speaking');
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+</body>
+</html>
