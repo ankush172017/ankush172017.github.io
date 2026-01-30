@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Real Horror Game</title>
+    <style>
+        /* --- CSS (Design as per image) --- */
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #0a0a0a; /* Dark background */
+            color: #d1d1d1; /* Light grey text */
+            font-family: 'Courier New', monospace; /* Code-like font */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            background-image: url('https://images.unsplash.com/photo-1518655294025-a130e9d6c703?q=80&w=2670&auto=format&fit=crop'); /* Grainy texture for background */
+            background-blend-mode: multiply;
+            background-color: #111;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        #game-container {
+            width: 90%;
+            max-width: 1000px;
+            background-color: rgba(17, 17, 17, 0.95); /* Slightly transparent dark background */
+            border: 1px solid #333;
+            padding: 20px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.9);
+            border-radius: 8px;
+        }
+
+        /* Header (as per image) */
+        h1.game-title {
+            color: #ff4444; /* Red title */
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 2px solid #8b0000;
+            padding-bottom: 10px;
+        }
+
+        /* Screen layout (two parts: left and right) */
+        .screen-layout {
+            display: flex;
+            gap: 20px;
+            min-height: 400px;
+            align-items: center;
+            margin-bottom: 30px; /* Space between different screen sections */
+        }
+
+        .left-panel, .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Image styling */
+        .game-img {
+            width: 100%;
+            max-width: 400px; /* Constrain max width */
+            height: auto;
+            border-radius: 5px;
+            border: 3px solid #444; /* Thicker border */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+            object-fit: cover; /* Ensure images cover their area */
+        }
+
+        /* Red border for scary elements */
+        .scary-border {
+            border-color: #ff0000; /* Bright red border */
+            box-shadow: 0 0 15px #ff0000;
+        }
+
+        /* Text styling */
+        h2 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Button design (as per image) */
+        .btn-contained {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s, transform 0.1s;
+            margin: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+        }
+
+        .btn-contained:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+        }
+        
+        .red-text {
+            color: #ff4444; /* For "GAME OVER" */
+        }
+
+        /* Jumpscare specific styling */
+        .jumpscare-img {
+            width: 100%;
+            max-width: 450px;
+            animation: shake 0.5s infinite; /* Shaking effect for jumpscare */
+            border-color: #ff0000;
+            box-shadow: 0 0 25px #ff0000;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* Special text box for descriptions in the image */
+        .description-box {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #ff4444;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1 class="game-title">The Haunted Hallway</h1>
+        </div>
+
+    <script>
+        const container = document.getElementById('game-container');
+
+        // --- PHOTO LINKS (IMPORTANT: Replace these with your actual image paths/URLs) ---
+        const images = {
+            // YOUR PHOTO (made scary/ghostly for the intro)
+            // Use an image of yourself or a friend, preferably edited to look creepy (e.g., red eyes, cracked skin)
+            userScaryFace: 'https://i.ibb.co/L5k6h69/user-scary-face.png', // Placeholder: Creative scary human face
+
+            // REAL HALLWAY IMAGE
+            hallwayReal: 'https://i.ibb.co/yS01sLp/dark-hallway.png', // Placeholder: Dark, eerie hallway
+
+            // ABANDONED ROOM IMAGE (for the right door choice)
+            abandonedRoom: 'https://i.ibb.co/tZ5M04c/abandoned-room.png', // Placeholder: Creepy abandoned room
+
+            // GHOST IMAGE (for jumpscare)
+            finalGhost: 'https://i.ibb.co/1K54c1j/jumpscare-ghost.png' // Placeholder: Terrifying ghost face
+        };
+
+        // --- GAME STATES (as per your image layout) ---
+        const gameStates = {
+            // Screen 1: Start (Top section of your image)
+            start: `
+                <div class="screen-layout">
+                    <div class="left-panel">
+                        <img src="${images.userScaryFace}" alt="User's Scary Face" class="game-img scary-border">
+                        <div class="description-box">
+                           <p>तुम एक सुनसान और डरावने गलियारे में हो।</p>
+                        </div>
+                    </div>
+                    <div class="right-panel">
+                         <img src="${images.hallwayReal}" alt="Dark Hallway" class="game-img">
+                         <h2 style="margin-top: 20px;">गहन अंधेरे में आपका स्वागत है...</h2>
+                         <button class="btn-contained" onclick="changeState('choice')">Game Start Karein!</button>
+                    </div>
+                </div>
+            `,
+
+            // Screen 2: Choice (Middle section of your image)
+            choice: `
+                <div class="screen-layout">
+                    <div class="left-panel">
+                        <img src="${images.hallwayReal}" alt="Hallway" class="game-img">
+                    </div>
+                    <div class="right-panel">
+                        <h2>Right Door room</h2>
+                        <p>तुम एक सुनसान और डरावने गलियारे में हो। सामने दो दरवाजे हैं, दाईं ओर वाला थोड़ा खुला है...</p>
+                        <div>
+                             <button class="btn-contained" onclick="alert('यह कमरा खाली है। तुम अभी के लिए बच गए!')">Left Door Kholo</button>
+                             <button class="btn-contained red-text" onclick="changeState('jumpscare')">Right Door Kholo</button>
+                        </div>
+                    </div>
+                    <div class="right-panel">
+                         <img src="${images.abandonedRoom}" alt="Abandoned Room" class="game-img">
+                    </div>
+                </div>
+            `,
+
+            // Screen 3: Game Over (Bottom section of your image)
+            jumpscare: `
+                <div class="screen-layout">
+                    <div class="left-panel">
+                        <h2 class="red-text" style="font-size: 2.5rem;">GAME OVER!</h2>
+                        <p style="font-size: 1.2rem;">भूत ने आपको पकड़ लिया!</p>
+                        <button class="btn-contained" onclick="changeState('start')">Try Again</button>
+                    </div>
+                    <div class="right-panel">
+                        <img src="${images.finalGhost}" alt="Ghost Jumpscare" class="game-img jumpscare-img scary-border">
+                    </div>
+                </div>
+            `
+        };
+
+        // Function to change the game screen
+        function changeState(stateName) {
+            container.innerHTML = `<h1 class="game-title">The Haunted Hallway</h1>` + gameStates[stateName];
+        }
+
+        // Start the game when the page loads
+        changeState('start');
+
+    </script>
+</body>
+</html>
