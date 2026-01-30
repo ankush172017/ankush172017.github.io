@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Horror Game</title>
+    <style>
+        /* --- CSS (डिज़ाइन) --- */
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #0a0a0a; /* गहरा काला बैकग्राउंड */
+            color: #d1d1d1; /* हल्का ग्रे टेक्स्ट */
+            font-family: 'Courier New', monospace; /* कोड जैसा फॉन्ट */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #game-container {
+            width: 90%;
+            max-width: 1000px;
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        /* स्क्रीन का लेआउट (दो हिस्से: बायां और दायां) */
+        .screen-layout {
+            display: flex;
+            gap: 20px;
+            min-height: 400px;
+            align-items: center;
+        }
+
+        .left-panel, .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* इमेज स्टाइलिंग */
+        .game-img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 5px;
+            border: 2px solid #444;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+
+        .scary-border {
+            border-color: #8b0000; /* लाल बॉर्डर डर के लिए */
+        }
+
+        /* टेक्स्ट स्टाइलिंग */
+        h2 {
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        /* बटन का डिज़ाइन (इमेज जैसा) */
+        .btn-contained {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+
+        .btn-contained:hover {
+            background-color: #555;
+        }
+        
+        .red-text {
+            color: #ff4444;
+        }
+
+        /* जम्पस्केयर के लिए */
+        .jumpscare-img {
+            width: 100%;
+            max-width: 450px;
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        </div>
+
+    <script>
+        const container = document.getElementById('game-container');
+
+        // --- फोटो लिंक्स (इन्हें अपनी फोटो से बदलें) ---
+        const images = {
+            // आपकी फोटो (डरावना रूप)
+            userScaryFace: 'https://images.unsplash.com/photo-1579682809318-32b3ae0b0539?q=80&w=2574&auto=format&fit=crop',
+            // रियल गलियारा
+            hallwayReal: 'https://images.unsplash.com/photo-1594361494414-044738174136?q=80&w=2670&auto=format&fit=crop',
+            // दूसरा कमरा
+            abandonedRoom: 'https://images.unsplash.com/photo-1470330678885-a4958222c095?q=80&w=2670&auto=format&fit=crop',
+            // भूत (जम्पस्केयर)
+            finalGhost: 'https://images.unsplash.com/photo-1542397284385-6010376c5337?q=80&w=2574&auto=format&fit=crop'
+        };
+
+        // --- गेम की अलग-अलग स्क्रीन्स (States) ---
+        const gameStates = {
+            // स्क्रीन 1: शुरुआत (जैसा आपकी इमेज में ऊपर है)
+            start: `
+                <div class="screen-layout">
+                    <div class="left-panel">
+                        <img src="${images.userScaryFace}" alt="User Face" class="game-img scary-border">
+                    </div>
+                    <div class="right-panel" style="background-image: url('${images.hallwayReal}'); background-size: cover; position: relative;">
+                         <div style="background: rgba(0,0,0,0.7); padding: 20px; border-radius: 5px;">
+                            <h2>गहन अंधेरे में आपका स्वागत है...</h2>
+                            <p>क्या आप अंदर जाने की हिम्मत रखते हैं?</p>
+                            <button class="btn-contained" onclick="changeState('choice')">Game Start karen</button>
+                        </div>
+                    </div>
+                </div>
+            `,
+
+            // स्क्रीन 2: चुनाव (जैसा आपकी इमेज में बीच में है)
+            choice: `
+                 <div class="screen-layout">
+                    <div class="left-panel">
+                        <img src="${images.hallwayReal}" alt="Hallway" class="game-img">
+                    </div>
+                    <div class="right-panel">
+                        <h2>Right Door room</h2>
+                        <p>आप एक सुनसान गलियारे में हैं। सामने दो दरवाजे हैं। दाईं ओर वाला दरवाजा थोड़ा खुला है...</p>
+                        <div>
+                             <button class="btn-contained" onclick="alert('यह कमरा खाली है। अभी के लिए बच गए।')">Left Door kholo</button>
+                             <button class="btn-contained red-text" onclick="changeState('jumpscare')">Right Door kholo</button>
+                        </div>
+                    </div>
+                     <div class="right-panel">
+                         <img src="${images.abandonedRoom}" alt="Room" class="game-img">
+                     </div>
+                </div>
+            `,
+
+            // स्क्रीन 3: गेम ओवर (जैसा आपकी इमेज में नीचे है)
+            jumpscare: `
+                 <div class="screen-layout">
+                    <div class="left-panel">
+                        <h2 class="red-text" style="font-size: 2rem;">GAME OVER!</h2>
+                        <p>भूत ने आपको पकड़ लिया।</p>
+                        <button class="btn-contained" onclick="changeState('start')">Try Again</button>
+                    </div>
+                    <div class="right-panel">
+                        <img src="${images.finalGhost}" alt="Ghost Jumpscare" class="game-img jumpscare-img scary-border">
+                    </div>
+                </div>
+            `
+        };
+
+        // स्क्रीन बदलने का फंक्शन
+        function changeState(stateName) {
+            container.innerHTML = gameStates[stateName];
+        }
+
+        // गेम शुरू करें
+        changeState('start');
+
+    </script>
+</body>
+</html>
