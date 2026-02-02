@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रियलिटी डोरेमोन: फोटो स्टोरी</title>
+    <style>
+        :root {
+            --doraemon-blue: #00a8ff;
+            --nobita-yellow: #f1c40f;
+            --shizuka-pink: #e84393;
+            --bg-color: #1a1a2e;
+            --text-color: #fff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 { text-align: center; color: var(--doraemon-blue); }
+        .warning { background-color: #e74c3c; color: white; padding: 10px; border-radius: 5px; text-align: center; margin-bottom: 20px; font-size: 0.9em;}
+
+        /* मुख्य सीन कंटेनर */
+        .scene-container {
+            background-color: #16213e;
+            width: 95%;
+            max-width: 800px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 2px solid #333;
+        }
+
+        /* बड़ी बैकग्राउंड फोटो */
+        .main-scene-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover; /* फोटो को फ्रेम में फिट करता है */
+            border-bottom: 3px solid var(--doraemon-blue);
+        }
+
+        /* डायलॉग सेक्शन */
+        .dialogue-section {
+            padding: 20px;
+            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+        }
+
+        /* डायलॉग और चेहरे का रैपर */
+        .speech-wrapper {
+            display: flex;
+            align-items: flex-start; /* ऊपर की तरफ अलाइन करें */
+            margin-bottom: 25px;
+        }
+
+        /* बोलने वाले का छोटा फोटो (अवतार) */
+        .speaker-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            flex-shrink: 0; /* फोटो को पिचकने से रोकता है */
+        }
+
+        /* स्पीच बबल */
+        .speech-bubble {
+            background-color: #fff;
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 20px;
+            position: relative;
+            margin-left: 15px;
+            flex-grow: 1;
+        }
+        
+        /* बबल की पूंछ */
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            border-width: 10px 10px 10px 0;
+            border-style: solid;
+            border-color: transparent #fff transparent transparent;
+        }
+
+        /* कैरेक्टर के नाम */
+        .name { font-weight: bold; display: block; margin-bottom: 5px; }
+        .dora-name { color: var(--doraemon-blue); }
+        .nobi-name { color: #d35400; }
+        .shizu-name { color: var(--shizuka-pink); }
+
+        /* राइट साइड अलाइनमेंट (शिजुका के लिए) */
+        .speech-wrapper.right-align {
+            flex-direction: row-reverse;
+        }
+        .speech-wrapper.right-align .speech-bubble {
+            margin-left: 0;
+            margin-right: 15px;
+            background-color: #fff0f6; /* शिजुका के बबल का रंग */
+        }
+        .speech-wrapper.right-align .speech-bubble::after {
+            left: auto;
+            right: -10px;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent #fff0f6;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Reality Doraemon: एक दिन</h1>
+    <div class="warning">
+        महत्वपूर्ण: असली अनुभव के लिए नीचे दी गई स्लेटी रंग की डमी तस्वीरों को अपनी डाउनलोड की गई "रियलिस्टिक" तस्वीरों से बदलें।
+    </div>
+
+    <div class="scene-container">
+        <img class="main-scene-image" src="https://via.placeholder.com/800x400?text=Scene+1+Background:+Realistic+Japanese+Bedroom" alt="Bedroom Scene">
+        
+        <div class="dialogue-section">
+            <div class="speech-wrapper">
+                <img class="speaker-avatar" src="https://via.placeholder.com/100x100?text=Nobita+Lazy+Face" alt="Nobita Lazy">
+                <div class="speech-bubble">
+                    <span class="name nobi-name">नोबिता:</span>
+                    डोरेमोन! यार, कोई ऐसा गैजेट निकालो ना कि मैं बिस्तर पर पड़ा रहूँ और मेरा होमवर्क अपने आप हो जाए! प्लीज़!
+                </div>
+            </div>
+
+            <div class="speech-wrapper">
+                 <img class="speaker-avatar" src="https://via.placeholder.com/100x100?text=Doraemon+Sighing+Face" alt="Doraemon Sighing">
+                <div class="speech-bubble">
+                    <span class="name dora-name">डोरेमोन:</span>
+                    (लंबी सांस लेते हुए) नोबिता... मेरे पास एक ऐसा गैजेट है जो तुम्हारी जगह 'सो' सकता है जब तुम होमवर्क करोगे। बोलो, चाहिए?
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="scene-container">
+        <img class="main-scene-image" src="https://via.placeholder.com/800x400?text=Scene+2+Background:+Realistic+Living+Room+with+Gadgets" alt="Intelligent Scene">
+        
+        <div class="dialogue-section">
+            <div class="speech-wrapper">
+                <img class="speaker-avatar" src="https://via.placeholder.com/100x100?text=Doraemon+Smart+Face" alt="Doraemon Smart">
+                <div class="speech-bubble">
+                    <span class="name dora-name">डोरेमोन:</span>
+                    देखो नोबिता, यह 'क्वांटम-रियलिटी मैनिपुलेटर' है। यह आस-पास के स्पेस-टाइम के कणों को बदलकर वास्तविकता को थोड़ा मोड़ सकता है। यह बहुत जटिल विज्ञान है।
+                </div>
+            </div>
+
+            <div class="speech-wrapper">
+                 <img class="speaker-avatar" src="https://via.placeholder.com/100x100?text=Nobita+Confused+Face" alt="Nobita Confused">
+                <div class="speech-bubble">
+                    <span class="name nobi-name">नोबिता:</span>
+                    हैं? 'क्वांटम' क्या? डोरेमोन, क्या इससे डोरा-केक जल्दी बन सकते हैं? मुझे बस इतना समझ आया।
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="scene-container">
+        <img class="main-scene-image" src="https://via.placeholder.com/800x400?text=Scene+3+Background:+Realistic+Park/Street+Chaos" alt="Angry Scene">
+        
+        <div class="dialogue-section">
+            <div class="speech-wrapper">
+                <img class="speaker-avatar" src="https://via.placeholder.com/100x100?text=Nobita+Crying+Face" alt="Nobita Crying">
+                <div class="speech-bubble">
+                    <span class="name nobi-name">नोबिता:</span>
+                    (रोते हुए) डोरेमोन बचाओ! जियान ने मुझे फिर पीटा क्योंकि मैंने तुम्हारी 'टाइम मशीन' का ब्रेक तोड़ दिया!
+                </div>
+            </div>
+
+            <div class="speech-wrapper">
+                 <img class="speaker-avatar" src="https://via.placeholder.com/100x100?text=Doraemon+Angry+Face" alt="Doraemon Angry">
+                <div class="speech-bubble" style="border: 2px solid red;">
+                    <span class="name dora-name">डोरेमोन:</span>
+                    (एकदम लाल गुस्से में) तुमने क्या किया?! टाइम मशीन का ब्रेक?! तुम्हें पता है उसे ठीक करने में भविष्य के कितने साल लगेंगे? अब तुम खुद भुगतो जियान को! मैं नहीं आ रहा!
+                </div>
+            </div>
+
+            <div class="speech-wrapper right-align">
+                 <img class="speaker-avatar" src="https://via.placeholder.com/100x100?text=Shizuka+Worried+Face" alt="Shizuka Worried">
+                <div class="speech-bubble">
+                    <span class="name shizu-name">शिजुका (Sania):</span>
+                    अरे लड़कों, बस करो! नोबिता, तुम्हें सावधान रहना चाहिए था। और डोरेमोन, इतना गुस्सा ठीक नहीं है।
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
