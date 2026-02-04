@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fight of Human - Battle Arena</title>
+    <style>
+        /* पेज का बेसिक स्टाइल - डार्क और एक्शन थीम */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1d; /* गहरा काला बैकग्राउंड */
+            color: #ffffff;
+            text-align: center;
+        }
+
+        /* मुख्य कंटेनर */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* टाइटल का स्टाइल */
+        header h1 {
+            font-family: 'Impact', sans-serif; /* दमदार फॉन्ट */
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            /* टेक्स्ट को थोड़ा मेटल/आग जैसा लुक देने के लिए */
+            background: linear-gradient(45deg, #ff4b2b, #ff416c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+        }
+
+        /* इमेज बॉक्स का स्टाइल */
+        .image-frame-container {
+            /* इसे 3D लुक देने के लिए बॉर्डर और शैडो */
+            border: 4px solid #333;
+            box-shadow: 0 0 20px rgba(255, 75, 43, 0.3), inset 0 0 50px rgba(0,0,0,0.8);
+            background-color: #000;
+            padding: 10px;
+            border-radius: 8px;
+            overflow: hidden; /* ताकि इमेज बाहर न निकले */
+        }
+
+        /* मुख्य इमेज */
+        .main-battle-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+            /* इमेज पर थोड़ा कंट्रास्ट बढ़ाने के लिए फिल्टर */
+            filter: contrast(1.1) saturate(1.1);
+        }
+
+        /* फूटर */
+        footer {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* मोबाइल के लिए थोड़ा एडजस्टमेंट */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>FIGHT OF HUMAN</h1>
+            <p class="tagline">दिखने में कार्टून, अहसास में असली - अंतिम युद्ध।</p>
+        </header>
+        
+        <main>
+            <div class="image-frame-container">
+                <img src="https://placehold.co/1200x700/222/ff4b2b?text=यहाँ+अपनी+रियल+दिखने+वाली+कार्टून+इमेज+लगाएं\n(जिसमें+टैंक,+बंदूकें+और+कारें+हों)&font=roboto" 
+                     alt="Fight of Human - Realistic Cartoon Battle Scene with tanks and guns" 
+                     class="main-battle-image">
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2024 Fight of Human Project. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
